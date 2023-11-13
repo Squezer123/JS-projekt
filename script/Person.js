@@ -2,9 +2,9 @@
     constructor(config){
         super(config);
         this.movingProgressRemaining = 0;
-
+        
         this.isPlayerControlled = config.isPlayerControlled || false;
-
+        
         this.directionUpdate = {
             "up": ["y", -1],
             "down": ["y", 1],
@@ -13,20 +13,37 @@
         }
     }
     update(state){
+        if (this.movingProgressRemaining > 0) {
         this.updatePosition();
+        }else{
+
+        }
         this.updateSprite(state);
 
         if(this.isPlayerControlled && this.movingProgressRemaining === 0 && state.arrow){
-            this.direction = state.arrow;
-            this.movingProgressRemaining = 4;
+           this.startBehavior(state,{
+            type: "walk",
+            direction: state.arrow
+           })
+        }
+    }
+
+    startBehavior(state, behavior){
+        this.direction = behavior.direction;
+        if(behavior.type === "walk"){
+            if(state.map.isSpaceTaken(this.x,this.y,this.direction)){
+                return;
+            }
+            
+            this.movingProgressRemaining = 16;
         }
     }
     updatePosition(){
-        if (this.movingProgressRemaining > 0) {
+        
             const [property, change] = this.directionUpdate[this.direction];
             this[property] += change;
             this.movingProgressRemaining -= 1;
-        }
+        
     }
 
     updateSprite(state){

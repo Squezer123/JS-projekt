@@ -64,7 +64,9 @@ class Sprite {
             x,y,
             48, 48
         )
+        if(this.gameObject.isThisObject === false)
         this.updateAnimationProgress();
+        else return;
     }
     
 }
