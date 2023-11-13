@@ -6,12 +6,11 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #333;
     padding: 0;
     margin: 0;
     height: 100vh;
     overflow: hidden;
-    background-image: url('/Assets/background.jpg');
+    background-image: url('../Assets/background.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;

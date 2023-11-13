@@ -9,7 +9,7 @@ class OverworldMap {
     }
 
     drawBackgroundImage(ctx){
-        ctx.drawImage(this.backgroundImage, 0, 0);
+        ctx.drawImage(this.backgroundImage, 100, 20);
     }
 
 
@@ -24,24 +24,33 @@ class OverworldMap {
         let x = utils.withGrid(objX);
         let y = utils.withGrid(objY);
         const newGameObject = new GameObject({
-            x: x+18,
+            x: x+18+100,
             y: y+25,
             src: src,
             isThisObject: true,
         });
 
         this.gameObjects['newObject'+x] = newGameObject;
-        this.addWall(x, y);
+        this.addWall(x + 100, y);
         console.log(this.gameObjects);
 
         return newGameObject;
     }
-    generateObjects(){
-        let src ='Assets/items/flasks/flasks_1_1.png'
-        for(let i = 0; i < 3; i++){
-            let x = Math.floor(Math.random() * 5) + 1;
-            let y = Math.floor(Math.random() * 5) + 1;
-            this.addGameObject(x,y,src)
+    generateObjects() {
+        let src = 'Assets/items/flasks/flasks_1_1.png';
+        let usedPairs = [];
+    
+        for (let i = 0; i < 3; i++) {
+            let x, y;
+            
+            do {
+                x = Math.floor(Math.random() * 5) + 1;
+                y = Math.floor(Math.random() * 5) + 1;
+            } while (usedPairs.some(pair => pair.x === x && pair.y === y));
+
+            usedPairs.push({ x, y });
+    
+            this.addGameObject(x, y, src);
         }
     }
 
@@ -51,12 +60,12 @@ class OverworldMap {
 
 window.OverworldMaps = {
     DemoRoom:{
-        backgroundSrc: "/Assets/test.png",
+        backgroundSrc: "Assets/test.png",
         gameObjects: {
             player: new Person({
                 isThisObject: false,
                 isPlayerControlled: true,
-                x: utils.withGrid(2),
+                x: utils.withGrid(2)+100,
                 y: utils.withGrid(2),
             }),
         },

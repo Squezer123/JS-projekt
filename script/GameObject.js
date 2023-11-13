@@ -6,7 +6,7 @@ class GameObject {
         this.isThisObject = config.isThisObject || false;
         this.sprite = new Sprite({
             gameObject: this,
-            src: config.src || "/Assets/playerv2.png",
+            src: config.src || "Assets/playerv2.png",
         });
     }
     update() {
