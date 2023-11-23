@@ -2,6 +2,12 @@ class Sprite {
     constructor(config){
 
         this.image = new Image();
+        this.mark = new Image();
+
+        this.mark.src = "Assets/mark.png";
+        this.mark.onload = () => {
+            this.isLoaded = true;
+        }
         this.image.src = config.src;
         this.image.onload = () => {
             this.isLoaded = true;
@@ -68,5 +74,6 @@ class Sprite {
         this.updateAnimationProgress();
         else return;
     }
+    
     
 }
