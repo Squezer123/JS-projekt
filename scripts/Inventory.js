@@ -42,15 +42,17 @@ class Inventory {
             options.style.left = `${invItem.offsetLeft}px`;
             options.style.top = `${invItem.offsetTop}px`;
             this.element.appendChild(options);
-            options.addEventListener("click", () => {
+            options.addEventListener("click", async() => {
                 const removedItem = this.hero.inventory.splice(invItem.id, 1)[0];
                 const name = removedItem.name;
                 this.element.removeChild(invItem);
                 this.element.removeChild(options);
+                
+                await this.waitForPlayer();
 
                 this.map.gameObjects[name] = new GameObject({
                     id: `${name}`,
-                    x: this.hero.x+16,
+                    x: this.hero.x,
                     y: this.hero.y,
                     src: `${removedItem.image.src}`,
                     isObject: true,
@@ -77,7 +79,20 @@ class Inventory {
         });
     }
     
+    waitForPlayer() {
+        return new Promise((resolve) => {
+            const checkPlayerMovement = () => {
+                if (this.map.gameObjects.hero.movingProgressRemaining === 0) {
+                    resolve();
+                } else {
+                    requestAnimationFrame(checkPlayerMovement);
+                }
+            };
     
+            checkPlayerMovement();
+        });
+    }
+
     done(){
         this.element.remove();  
         

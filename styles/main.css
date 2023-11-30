@@ -14,8 +14,13 @@ body {
   margin: 0;
   overflow: hidden;
   font-family: 'VT323', monospace;
+  cursor: url('../Assets/cursor_default.png'), auto;
+
 }
 
+body:hover {
+  cursor: url('../Assets/cursor_default.png'), pointer;
+}
 .game-container {
   position: relative; 
   width: 352px;
@@ -23,7 +28,7 @@ body {
   margin: 0 auto;
   outline: 1px solid #fff;
 
-  transform: scale(4) translateY(50%);
+  transform: scale(3) translateY(50%);
 }
 
 .game-container canvas {
