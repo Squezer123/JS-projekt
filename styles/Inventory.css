@@ -1,0 +1,18 @@
+.Inventory{
+    position: absolute;
+    width: 62px;
+    height: 104px;
+    background: url("../Assets/inventory.png");
+    top: 40px;
+    right: 30px;
+    image-rendering: pixelated;
+}
+
+.invImg{
+    margin: 5px;
+}
+
+.Options{
+    position: absolute;
+    font-size: 5px;
+}

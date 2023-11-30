@@ -14,6 +14,8 @@ class GameObject {
     this.behaviorLoopIndex = 0;
 
     this.talking = config.talking || [];
+    this.inventory = config.inventory || [];
+    this.isObject = config.isObject || false;
   }
 
   mount(map) {
@@ -48,7 +50,27 @@ class GameObject {
     }
 
     this.doBehaviorEvent(map);
+  }
 
+  showInventory(map){
+        console.log(this.inventory);
+        const inventory = new Inventory({
+            map: map,
+            hero: this,
+            onComplete: () => resolve() 
+         })
+         inventory.init(document.querySelector(".game-container"));
+  }
+
+  addToInventory(inventory,map){
+    this.inventory.push(inventory[0]);
+    let inv = document.querySelector(".Inventory");
+    if(inv)
+    {
+      inv.remove();
+      this.showInventory(map);
+    }
+    
   }
   
 }

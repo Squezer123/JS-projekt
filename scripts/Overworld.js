@@ -4,6 +4,8 @@ class Overworld {
    this.canvas = this.element.querySelector(".game-canvas");
    this.ctx = this.canvas.getContext("2d");
    this.map = null;
+   this.hero = config.hero;
+   this.inventoryOpen = false;
  }
 
   startGameLoop() {
@@ -12,7 +14,6 @@ class Overworld {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
       const cameraPerson = this.map.gameObjects.hero;
-
       Object.values(this.map.gameObjects).forEach(object => {
         object.update({
           arrow: this.directionInput.direction,
@@ -26,9 +27,8 @@ class Overworld {
       Object.values(this.map.gameObjects).sort((a,b) => {
         return a.y - b.y;
       }).forEach(object => {
-        object.sprite.draw(this.ctx, cameraPerson);
+        object.sprite.draw(this.ctx, cameraPerson, object.isObject);
       })
-
 
       //Draw Upper layer
       // this.map.drawUpperImage(this.ctx);
@@ -38,6 +38,21 @@ class Overworld {
       })
     }
     step();
+ }
+
+
+ showInventory(){
+  new KeyPressListener("KeyI", () => {
+    if(this.inventoryOpen === false){
+      this.map.gameObjects.hero.showInventory(this.map);
+      
+      this.inventoryOpen === true;
+    }
+    else{
+      this.inventoryOpen === false;
+    }
+    
+  })
  }
 
  bindActionInput(){
@@ -57,12 +72,14 @@ class Overworld {
  startMap(mapConfig){
   this.map = new OverworldMap(mapConfig);
   this.map.overworld = this;
+  this.map.AddHero(this.hero);
   this.map.mountObjects();
  }
 
  init() {
   this.startMap(window.OverworldMaps.DemoRoom);
 
+  this.showInventory();
   this.bindActionInput();
   this.bindHeroPositionCheck();
 

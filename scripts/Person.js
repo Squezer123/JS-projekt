@@ -3,6 +3,7 @@ class Person extends GameObject {
     super(config);
     this.movingProgressRemaining = 0;
     this.isStanding = false;
+    
 
     this.isPlayerControlled = config.isPlayerControlled || false;
     this.useTile = utils.nextPosition(this.x,this.y,this.direction);
@@ -72,6 +73,7 @@ class Person extends GameObject {
       const [property, change] = this.directionUpdate[this.direction];
       this[property] += change;
       this.movingProgressRemaining -= 1;
+      
 
       if(this.movingProgressRemaining === 0){
         utils.emitEvent("PersonWalkingComplete",{

@@ -63,21 +63,29 @@ class Sprite {
   }
   
 
-  draw(ctx, cameraPerson) {
+  draw(ctx, cameraPerson, isObject) {
     const x = this.gameObject.x - 8 + utils.withGrid(10.5) - cameraPerson.x;
     const y = this.gameObject.y - 18 + utils.withGrid(6) - cameraPerson.y;
 
 
     const [frameX, frameY] = this.frame;
 
-    this.isLoaded && ctx.drawImage(this.image,
-      frameX * 48, frameY * 48,
-      48,48,
-      x,y,
-      32,32
-    )
+    if(!isObject)
+    {
+      this.isLoaded && ctx.drawImage(this.image,
+        frameX * 48, frameY * 48,
+        48,48,
+        x,y,
+        32,32
+      )
+  
+      this.updateAnimationProgress();
 
-    this.updateAnimationProgress();
+    }
+    else{
+      ctx.drawImage(this.image,x+utils.withGrid(0.5),y+utils.withGrid(1))
+    }
+    
   }
 
 }

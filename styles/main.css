@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
 @import url(TextMessage.css);
 @import url(SceneTransition.css);
+@import url(Inventory.css);
 
 * {
   box-sizing:border-box;
@@ -10,6 +13,7 @@ body {
   padding: 0;
   margin: 0;
   overflow: hidden;
+  font-family: 'VT323', monospace;
 }
 
 .game-container {
@@ -19,7 +23,7 @@ body {
   margin: 0 auto;
   outline: 1px solid #fff;
 
-  transform: scale(3) translateY(50%);
+  transform: scale(4) translateY(50%);
 }
 
 .game-container canvas {

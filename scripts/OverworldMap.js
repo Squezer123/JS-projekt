@@ -64,6 +64,7 @@ class OverworldMap {
     })
   }
 
+
   async startCutscene(events){
     this.isCutscenePlaying = true;
     for(let i=0; i<events.length; i++){
@@ -99,7 +100,9 @@ class OverworldMap {
       this.startCutscene(match[0].events);
     }
   }
-
+  AddHero(hero){
+    this.gameObjects.hero = hero;
+  }
   addWall(x,y) {
     this.walls[`${x},${y}`] = true;
   }
@@ -111,6 +114,7 @@ class OverworldMap {
     const {x,y} = utils.nextPosition(wasX, wasY, direction);
     this.addWall(x,y);
   }
+
 }
 
 window.OverworldMaps = {
@@ -118,12 +122,6 @@ window.OverworldMaps = {
     lowerSrc: "Assets/map.png",
     upperSrc: "Assets/map.png",
     gameObjects: {
-      hero: new Person({
-        id: "hero",
-        isPlayerControlled: true,
-        x: utils.withGrid(1),
-        y: utils.withGrid(1),
-      }),
       npc1: new Person({
         id: "npc1",
         x: utils.withGrid(5),
@@ -133,6 +131,24 @@ window.OverworldMaps = {
           {
             events: [
               {type: "textMessage", text:"Hello There", faceHero: "npc1"}
+            ]
+          }
+        ]
+      }),
+      chest: new GameObject({
+        id: "chest",
+        x: utils.withGrid(7),
+        y: utils.withGrid(1),
+        src: "Assets/items/mini_chest/mini_chest_3.png",
+        isObject: true,
+        inventory: [
+          new Item({})
+         ], 
+        talking: [
+          {
+            events: [
+              {type: "textMessage", text:"Inventory comming soon", faceHero: "chest"},
+              {type: "PickItem", faceHero: "chest"}
             ]
           }
         ]
@@ -163,12 +179,29 @@ window.OverworldMaps = {
     lowerSrc: "Assets/dungeon.png",
     upperSrc: "Assets/test.png",
     gameObjects: {
-      hero: new Person({
-        id: "hero",
-        isPlayerControlled: true,
+      key: new GameObject({
+        id: "key",
         x: utils.withGrid(7),
-        y: utils.withGrid(2),
-      }),
+        y: utils.withGrid(7),
+        src: "Assets/items/keys/keys_1_1.png",
+        isObject: true,
+        inventory: [
+          new Item({
+            id: 1,
+            name: "key",
+            amount: 1,
+            description:"Lets you leave dungeon",
+            src: "Assets/items/keys/keys_1_1.png"
+          })
+         ], 
+        talking: [
+          {
+            events: [
+              {type: "PickItem", faceHero: "key"}
+            ]
+          }
+        ]
+      })
     },
     walls:{
       [utils.asGridCoords(8,3)]: true,
