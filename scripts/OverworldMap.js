@@ -118,7 +118,7 @@ class OverworldMap {
 }
 
 window.OverworldMaps = {
-  DemoRoom: {
+  Lobby: {
     lowerSrc: "Assets/map.png",
     upperSrc: "Assets/map.png",
     gameObjects: {
@@ -217,14 +217,14 @@ window.OverworldMaps = {
       [utils.asGridCoords(8,4)]: [
         {
           events: [
-            {type: "changeMap", map: "DemoRoom"},
+            {type: "changeMap", map: "Lobby"},
           ]
       }
     ],
     [utils.asGridCoords(8,5)]: [
       {
         events: [
-          {type: "changeMap", map: "DemoRoom"},
+          {type: "changeMap", map: "Lobby"},
         ]
     }
   ],

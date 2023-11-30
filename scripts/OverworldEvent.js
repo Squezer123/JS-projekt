@@ -85,17 +85,48 @@ class OverworldEvent{
         resolve();
     }
 
-    @ChangeMapDecorator 
     changeMap(resolve) {
-        const sceneTransition = new SceneTransition();
-        sceneTransition.init(document.querySelector(".game-container"), () => {
-            this.map.removeWall(this.map.gameObjects.hero.x, this.map.gameObjects.hero.y);
-            this.map.overworld.startMap(window.OverworldMaps[this.event.map]);
-            console.log(this.event.map)
-            resolve();
+        if(this.event.map === "Lobby"){
+            if(this.map.gameObjects.hero.inventory.length === 0){
+                console.log("test");
+                    const message = new TextMessage({
+                        text: "U need a key to leave this place...",
+                        onComplete: () => resolve() 
+                     })
+                     message.init(document.querySelector(".game-container"));
+            }
+            this.map.gameObjects.hero.inventory.forEach(element => {
+                if(element.name === "key"){
+                    const sceneTransition = new SceneTransition();
+                    sceneTransition.init(document.querySelector(".game-container"), () => {
+                        this.map.removeWall(this.map.gameObjects.hero.x, this.map.gameObjects.hero.y);
+                        this.map.overworld.startMap(window.OverworldMaps[this.event.map]);
+                        console.log(this.event.map)
+                        resolve();
+                        sceneTransition.fadeOut();
+                    });
+                }else{
+                    console.log("test");
+                    const message = new TextMessage({
+                        text: "U need a key to leave this place...",
+                        onComplete: () => resolve() 
+                     })
+                     message.init(document.querySelector(".game-container"));
+                }
 
-            sceneTransition.fadeOut();
-        });
+            });
+        }
+        else if(this.event.map === "Dungeon"){
+            const sceneTransition = new SceneTransition();
+                    sceneTransition.init(document.querySelector(".game-container"), () => {
+                        this.map.removeWall(this.map.gameObjects.hero.x, this.map.gameObjects.hero.y);
+                        this.map.overworld.startMap(window.OverworldMaps[this.event.map]);
+                        console.log(this.event.map)
+                        resolve();
+                        sceneTransition.fadeOut();
+                    });
+        }
+        
     }
 
 
@@ -104,19 +135,5 @@ class OverworldEvent{
             this[this.event.type](resolve);
         })
     }
-}
-function ChangeMapDecorator(target, key, descriptor) {
-    const originalMethod = descriptor.value;
 
-    descriptor.value = function (resolve) {
-        if (this.event.map === "Dungeon") {
-            console.log("Entering dungeon behavior");
-        } else {
-            console.log("Exiting dungeon behavior");
-           
-        }
-        originalMethod.call(this, resolve);
-    };
-
-    return descriptor;
 }

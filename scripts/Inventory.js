@@ -66,7 +66,6 @@ class Inventory {
                     ]
                   })
                   this.map.mountObjects();
-                console.log(this.map.gameObjects);
             });
            })
            this.element.appendChild(invItem);
