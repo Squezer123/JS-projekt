@@ -1,0 +1,30 @@
+[
+    {
+        "id": 0,
+        "name": "startingRoom",
+        "sizeX": 4,
+        "sizeY": 4,
+        "src": "Assets/Rooms/startingRoom.png"
+    },
+    {
+        "id": 1,
+        "name": "room1",
+        "sizeX": 7,
+        "sizeY": 4,
+        "src": "Assets/Rooms/room1.png"
+    },
+    {
+        "id": 2,
+        "name": "corridor",
+        "sizeX": 3,
+        "sizeY": 4,
+        "src": "Assets/Rooms/corridor.png"
+    },
+    {
+        "id": 3,
+        "name": "turn",
+        "sizeX": 4,
+        "sizeY": 4,
+        "src": "Assets/Rooms/turn.png"
+    }
+  ]

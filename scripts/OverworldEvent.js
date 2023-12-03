@@ -116,6 +116,7 @@ class OverworldEvent{
 
             });
         }
+        
         else if(this.event.map === "Dungeon"){
             const sceneTransition = new SceneTransition();
                     sceneTransition.init(document.querySelector(".game-container"), () => {
@@ -128,6 +129,9 @@ class OverworldEvent{
         }
         
     }
+    changeRoom(resolve) {
+        
+        }
 
 
     init(){

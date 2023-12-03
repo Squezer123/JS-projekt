@@ -34,5 +34,41 @@ const utils = {
       detail
     });
     document.dispatchEvent(event); 
+  },
+
+  checkPossibilities(array,x,y){
+    let possibleRooms = 0;
+    try{
+      if(array[x+1][y] === 0){
+        possibleRooms+=1;
+      }
+    }
+    catch(e){}
+    try{
+      if(array[x-1][y] === 0){
+        possibleRooms+=1;
+      }
+    }
+    catch(e){
+
+    }
+    try{
+      if(array[x][y+1] === 0){
+        possibleRooms+=1;
+      }
+    }
+    catch(e){
+
+    }
+    try{
+      if(array[x][y-1] === 0){
+        possibleRooms+=1;
+      }
+    }
+    catch(e){
+
+    }
+    console.log(possibleRooms);
+    return possibleRooms;
   }
 }
