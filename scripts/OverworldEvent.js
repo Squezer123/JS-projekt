@@ -86,7 +86,6 @@ class OverworldEvent{
     }
 
     changeMap(resolve) {
-        console.log(window.OverworldMaps[this.event.map]);
         if(this.event.map === "Lobby"){
             if(this.map.gameObjects.hero.inventory.length === 0){
                 console.log("test");
@@ -131,47 +130,129 @@ class OverworldEvent{
         
     }
     changeRoom(resolve) {
-        console.log(this.map.overworld.currenPosition)
         let x = this.map.overworld.currenPosition.x;
         let y = this.map.overworld.currenPosition.y;
-        console.log(this.event.direction)
-        switch(this.event.direction){
-            case "up":{
-                y -= 1;
-                const sceneTransition = new SceneTransition();
-                sceneTransition.init(document.querySelector(".game-container"), () => {
-                    this.map.removeWall(this.map.gameObjects.hero.x, this.map.gameObjects.hero.y);
-                    window.OverworldMaps[this.event.map].lowerSrc = `${newDungeon.dungeonMap[x][y].Room.src}`;
-                    this.map.overworld.startMap(window.OverworldMaps[this.event.map]);
-                    resolve();
-                    sceneTransition.fadeOut();
-                });
-            }
+        console.log(x,y)
+        let dungeon = this.map.overworld.dungeonMap;
+        let Room = {
+            lowerSrc: "Assets/Rooms/room4UDRL.png",
+            upperSrc: "Assets/test.png",
+            gameObjects: {},
+            walls:{},
+            cutsceneSpaces: {},
+            polygon:[
+              [0,0],
+              [0,5],
+              [5,5],
+              [5,0]
+            ]
         }
-        
+        switch(this.event.direction){
+            case "up":
+                y -= 1;
+                break;  
+            case "down":
+                y += 1;  
+                break; 
+            case "right":
+                x += 1;  
+                break; 
+            case "left":
+                x -= 1;  
+                break; 
+            
+        }
+        Room.cutsceneSpaces = this.generateDoors(dungeon[x][y].directions);
+        const sceneTransition = new SceneTransition();
+        sceneTransition.init(document.querySelector(".game-container"), () => {
+                this.map.removeWall(this.map.gameObjects.hero.x, this.map.gameObjects.hero.y);
+                Room.lowerSrc = `${dungeon[x][y].Room.src}`;
+                this.map.overworld.currenPosition = {x: x, y:y};
+                this.map.overworld.startMap(Room);
+                resolve();
+                sceneTransition.fadeOut();
+            });  
     }
 
     enterDungeon(resolve){
         let newDungeon = new DungeonCreator(this.ctx);
         newDungeon.init();
-        this.map.overworld.dungeonMap = newDungeon;
-        console.log();
+        this.map.overworld.dungeonMap = newDungeon.dungeonMap;
+        let Room = {
+            lowerSrc: "Assets/Rooms/room4UDRL.png",
+            upperSrc: "Assets/test.png",
+            gameObjects: {},
+            walls:{},
+            cutsceneSpaces: {},
+            polygon:[
+              [0,0],
+              [0,5],
+              [5,5],
+              [5,0]
+            ]
+        }
+        Room.cutsceneSpaces = this.generateDoors(newDungeon.dungeonMap[newDungeon.startingPoint.x][newDungeon.startingPoint.y].directions);
         const sceneTransition = new SceneTransition();
                     sceneTransition.init(document.querySelector(".game-container"), () => {
                         this.map.removeWall(this.map.gameObjects.hero.x, this.map.gameObjects.hero.y);
-                        window.OverworldMaps[this.event.map].lowerSrc = `${newDungeon.dungeonMap[newDungeon.startingPoint.x][newDungeon.startingPoint.y].Room.src}`;
-                        this.map.overworld.startMap(window.OverworldMaps[this.event.map]);
+                        Room.lowerSrc = `${newDungeon.dungeonMap[newDungeon.startingPoint.x][newDungeon.startingPoint.y].Room.src}`;
+                        this.map.overworld.startMap(Room);
                         this.map.overworld.currenPosition = {
                             x: newDungeon.startingPoint.x,
                             y: newDungeon.startingPoint.y
                         }
-                        this.map.generateDoors(newDungeon.dungeonMap[newDungeon.startingPoint.x][newDungeon.startingPoint.y].directions);
+
                         console.log(this.map);
                         resolve();
                         sceneTransition.fadeOut();
                     });
-        
     }
+    generateDoors(directions) {
+        let newSpaces = {}; 
+      
+        directions.forEach(direction => {
+          if (direction === 'up') {
+            const doorCoords = utils.asGridCoords(2, 0);
+            newSpaces[doorCoords] = [];
+            newSpaces[doorCoords].push({
+              events: [
+                { type: "changeRoom", direction: "up" },
+              ]
+            });
+          }
+          if (direction === 'down') {
+            const doorCoords = utils.asGridCoords(2, 4);
+            newSpaces[doorCoords] = [];
+            newSpaces[doorCoords].push({
+              events: [
+                { type: "changeRoom", direction: "down" },
+              ]
+            });
+          }
+          if (direction === 'left') {
+            const doorCoords = utils.asGridCoords(0, 2);
+            newSpaces[doorCoords] = [];
+            newSpaces[doorCoords].push({
+              events: [
+                { type: "changeRoom", direction: "left" },
+              ]
+            });
+          }
+          if (direction === 'right') {
+            const doorCoords = utils.asGridCoords(4, 2);
+            newSpaces[doorCoords] = [];
+            newSpaces[doorCoords].push({
+              events: [
+                { type: "changeRoom", direction: "right" },
+              ]
+            });
+          }
+        });
+      
+        return newSpaces; 
+      }
+
+    
 
 
     init(){

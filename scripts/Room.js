@@ -12,14 +12,8 @@ drawRoom(x,y,ctx){
 
 adjustRoom(exits, isStartingPoint,directions){
     let firstLetters = utils.directionFirstLetters(directions);
-    // if(isStartingPoint){
-    //     this.src = `Assets/Rooms/startingRoom${exits}${firstLetters}`;
-    // }
-    // else{
-    //     this.src = `Assets/Rooms/Room${exits}${firstLetters}`;
-    // }
-    this.src = `Assets/Rooms/room3UDR.png`;
-    
+    this.src = `Assets/Rooms/room${exits}${firstLetters}.png`;
+     
 }
 
 init(){

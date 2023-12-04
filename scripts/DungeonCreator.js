@@ -98,7 +98,6 @@ class DungeonCreator{
                 Room: this.createRoom(rowIndex, columnIndex),
                 directions: utils.checkDirections(this.dungeonMap,rowIndex,columnIndex),
             });
-              console.log(`Room: ${rowIndex},${columnIndex}`, this.createRoom(rowIndex, columnIndex));
             } else {
               
               newRow.push(this.dungeonMap[rowIndex][columnIndex]);
@@ -114,7 +113,6 @@ class DungeonCreator{
     init() {
         this.generateDisplay();
         this.dungeonMap = this.createDungeon();
-        console.log(this.dungeonMap);
         
        
     }

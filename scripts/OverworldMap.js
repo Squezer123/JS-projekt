@@ -95,32 +95,16 @@ class OverworldMap {
   checkForFootstepCutscene(){
     const hero = this.gameObjects["hero"];
     const match = this.cutsceneSpaces[`${hero.x},${hero.y}`];
-
     if(!this.isCutscenePlaying && match){
       this.startCutscene(match[0].events);
     }
   }
 
-  generateDoors(directions) {
-    directions.forEach(direction => {
-      if (direction === 'up') {
-        const doorCoords = utils.asGridCoords(2, 1);
-        if (!this.cutsceneSpaces[doorCoords]) {
-          this.cutsceneSpaces[doorCoords] = [];
-        }
-  
-        this.cutsceneSpaces[doorCoords].push({
-          events: [
-            {type: "changeMap", map:"Lobby", direction: direction},
-          ]
-        });
-      }
-    });
-  }
+ 
 
   AddHero(hero){
     this.gameObjects.hero = hero;
-    this.gameObjects.hero.x = utils.withGrid(2);
+    this.gameObjects.hero.x = utils.withGrid(1);
     this.gameObjects.hero.y = utils.withGrid(1);
   }
   addWall(x,y) {
@@ -291,27 +275,19 @@ window.OverworldMaps = {
     walls:{
     },
     cutsceneSpaces: {
-      [utils.asGridCoords(2,1)]: [
+      [utils.asGridCoords(2,0)]: [
         {
           events: [
-            {type: "changeRoom", map: "Room", direction: "up"},
+            {type: "changeRoom", map:"Room", direction: "up"},
           ]
       }
     ],
-    [utils.asGridCoords(8,5)]: [
-      {
-        events: [
-          {type: "changeMap", map: "Lobby"},
-        ]
-    }
-  ],
-    
     },
     polygon:[
-      [1,1],
-      [1,5],
-      [5,5],
-      [5,1]
+      [0,0],
+      [0,6],
+      [6,6],
+      [6,0]
     ]
   },
 }
