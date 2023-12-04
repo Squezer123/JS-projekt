@@ -100,9 +100,27 @@ class OverworldMap {
       this.startCutscene(match[0].events);
     }
   }
+
+  generateDoors(directions) {
+    directions.forEach(direction => {
+      if (direction === 'up') {
+        const doorCoords = utils.asGridCoords(2, 1);
+        if (!this.cutsceneSpaces[doorCoords]) {
+          this.cutsceneSpaces[doorCoords] = [];
+        }
+  
+        this.cutsceneSpaces[doorCoords].push({
+          events: [
+            {type: "changeMap", map:"Lobby", direction: direction},
+          ]
+        });
+      }
+    });
+  }
+
   AddHero(hero){
     this.gameObjects.hero = hero;
-    this.gameObjects.hero.x = utils.withGrid(1);
+    this.gameObjects.hero.x = utils.withGrid(2);
     this.gameObjects.hero.y = utils.withGrid(1);
   }
   addWall(x,y) {
@@ -164,7 +182,7 @@ window.OverworldMaps = {
             events: [
               {who: "hero", type: "stand", direction: "right"},
               {type: "textMessage", text:"Once you go in there, it may be hard to come back...", faceHero: "npc1"},
-              {type: "changeMap", map:"Room"},
+              {type: "enterDungeon", map:"Room"},
             ]
         }
       ],
@@ -273,10 +291,10 @@ window.OverworldMaps = {
     walls:{
     },
     cutsceneSpaces: {
-      [utils.asGridCoords(8,4)]: [
+      [utils.asGridCoords(2,1)]: [
         {
           events: [
-            {type: "changeMap", map: "Lobby"},
+            {type: "changeRoom", map: "Room", direction: "up"},
           ]
       }
     ],

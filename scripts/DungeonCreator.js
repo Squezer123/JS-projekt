@@ -94,7 +94,10 @@ class DungeonCreator{
       
           row.forEach((element, columnIndex) => {
             if (this.dungeonMap[rowIndex][columnIndex] === 1 || this.dungeonMap[rowIndex][columnIndex] === 2) {
-              newRow.push(this.createRoom(rowIndex, columnIndex));
+              newRow.push({
+                Room: this.createRoom(rowIndex, columnIndex),
+                directions: utils.checkDirections(this.dungeonMap,rowIndex,columnIndex),
+            });
               console.log(`Room: ${rowIndex},${columnIndex}`, this.createRoom(rowIndex, columnIndex));
             } else {
               

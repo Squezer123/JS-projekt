@@ -131,23 +131,46 @@ class OverworldEvent{
         
     }
     changeRoom(resolve) {
+        console.log(this.map.overworld.currenPosition)
+        let x = this.map.overworld.currenPosition.x;
+        let y = this.map.overworld.currenPosition.y;
+        console.log(this.event.direction)
+        switch(this.event.direction){
+            case "up":{
+                y -= 1;
+                const sceneTransition = new SceneTransition();
+                sceneTransition.init(document.querySelector(".game-container"), () => {
+                    this.map.removeWall(this.map.gameObjects.hero.x, this.map.gameObjects.hero.y);
+                    window.OverworldMaps[this.event.map].lowerSrc = `${newDungeon.dungeonMap[x][y].Room.src}`;
+                    this.map.overworld.startMap(window.OverworldMaps[this.event.map]);
+                    resolve();
+                    sceneTransition.fadeOut();
+                });
+            }
+        }
         
     }
 
     enterDungeon(resolve){
         let newDungeon = new DungeonCreator(this.ctx);
         newDungeon.init();
-
-        
+        this.map.overworld.dungeonMap = newDungeon;
+        console.log();
         const sceneTransition = new SceneTransition();
                     sceneTransition.init(document.querySelector(".game-container"), () => {
                         this.map.removeWall(this.map.gameObjects.hero.x, this.map.gameObjects.hero.y);
-                        console.log(`../${newDungeon.dungeonMap[newDungeon.startingPoint.x][newDungeon.startingPoint.y].src})`);
-                        console.log(window.OverworldMaps[this.event.map]);
+                        window.OverworldMaps[this.event.map].lowerSrc = `${newDungeon.dungeonMap[newDungeon.startingPoint.x][newDungeon.startingPoint.y].Room.src}`;
                         this.map.overworld.startMap(window.OverworldMaps[this.event.map]);
+                        this.map.overworld.currenPosition = {
+                            x: newDungeon.startingPoint.x,
+                            y: newDungeon.startingPoint.y
+                        }
+                        this.map.generateDoors(newDungeon.dungeonMap[newDungeon.startingPoint.x][newDungeon.startingPoint.y].directions);
+                        console.log(this.map);
                         resolve();
                         sceneTransition.fadeOut();
                     });
+        
     }
 
 

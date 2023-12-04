@@ -6,6 +6,8 @@ class Overworld {
    this.map = null;
    this.hero = config.hero;
    this.inventoryOpen = false;
+   this.dungeonMap = [];
+   this.currenPosition; 
  }
 
   startGameLoop() {
