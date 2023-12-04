@@ -36,16 +36,16 @@ const utils = {
     document.dispatchEvent(event); 
   },
 
-  checkPossibilities(array,x,y){
+  checkPossibilities(array,x,y,checker){
     let possibleRooms = 0;
     try{
-      if(array[x+1][y] === 0){
+      if(array[x+1][y] === checker){
         possibleRooms+=1;
       }
     }
     catch(e){}
     try{
-      if(array[x-1][y] === 0){
+      if(array[x-1][y] === checker){
         possibleRooms+=1;
       }
     }
@@ -53,7 +53,7 @@ const utils = {
 
     }
     try{
-      if(array[x][y+1] === 0){
+      if(array[x][y+1] === checker){
         possibleRooms+=1;
       }
     }
@@ -61,14 +61,34 @@ const utils = {
 
     }
     try{
-      if(array[x][y-1] === 0){
+      if(array[x][y-1] === checker){
         possibleRooms+=1;
       }
     }
     catch(e){
 
     }
-    console.log(possibleRooms);
     return possibleRooms;
+  },
+
+  directionFirstLetters(directions) {
+    return directions.map(word => word.charAt(0).toUpperCase()).join('');;
+  },
+  
+  checkDirections(array,x,y){
+    let params = [{x:x-1,y: y, d: "left"}, {x:x+1,y: y, d: "right"}, {x:x,y: y+1, d: "down"},{x:x,y: y-1, d: "up"}];
+    let directions = [];
+    for(let i = 3; i >= 0; i--){
+        let tempX = params[i].x;
+        let tempY = params[i].y;
+        try{
+            if(array[tempX][tempY] === 1 || array[tempX][tempY] === 2)
+            {
+                directions.push(params[i].d);
+            }
+        }
+        catch(e){}
+    }
+    return directions;
   }
 }

@@ -1,7 +1,7 @@
 class OverworldMap {
   constructor(config) {
     this.overworld = null;
-    this.gameObjects = config.gameObjects;
+    this.gameObjects = config.gameObjects || {};
     this.cutsceneSpaces = config.cutsceneSpaces || {};
     this.walls = config.walls || {};
     this.polygon = config.polygon || [];
@@ -102,6 +102,8 @@ class OverworldMap {
   }
   AddHero(hero){
     this.gameObjects.hero = hero;
+    this.gameObjects.hero.x = utils.withGrid(1);
+    this.gameObjects.hero.y = utils.withGrid(1);
   }
   addWall(x,y) {
     this.walls[`${x},${y}`] = true;
@@ -162,7 +164,7 @@ window.OverworldMaps = {
             events: [
               {who: "hero", type: "stand", direction: "right"},
               {type: "textMessage", text:"Once you go in there, it may be hard to come back...", faceHero: "npc1"},
-              {type: "changeMap", map: "Dungeon"},
+              {type: "changeMap", map:"Room"},
             ]
         }
       ],
@@ -235,6 +237,63 @@ window.OverworldMaps = {
       [1,9],
       [9,9],
       [9,1]
+    ]
+  },
+
+  Room: {
+    lowerSrc: "Assets/Rooms/room4UDRL.png",
+    upperSrc: "Assets/test.png",
+    gameObjects: {
+      key: new GameObject({
+        id: "key",
+        name: "key",
+        x: utils.withGrid(1),
+        y: utils.withGrid(2),
+        src: "Assets/items/keys/keys_1_1.png",
+        isObject: true,
+        inventory: [
+          new Item({
+            id: 1,
+            name: "key",
+            amount: 1,
+            description:"Lets you leave dungeon",
+            src: "Assets/items/keys/keys_1_1.png"
+          })
+         ], 
+        talking: [
+          {
+            events: [
+              {type: "PickItem", faceHero: "key"}
+            ]
+          }
+        ]
+      }),
+      
+    },
+    walls:{
+    },
+    cutsceneSpaces: {
+      [utils.asGridCoords(8,4)]: [
+        {
+          events: [
+            {type: "changeMap", map: "Lobby"},
+          ]
+      }
+    ],
+    [utils.asGridCoords(8,5)]: [
+      {
+        events: [
+          {type: "changeMap", map: "Lobby"},
+        ]
+    }
+  ],
+    
+    },
+    polygon:[
+      [1,1],
+      [1,5],
+      [5,5],
+      [5,1]
     ]
   },
 }

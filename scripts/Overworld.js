@@ -77,8 +77,6 @@ class Overworld {
 
  init() {
   this.startMap(window.OverworldMaps.Lobby);
-  let x = new DungeonCreator(this.ctx);
-  x.init();
   this.showInventory();
   this.bindActionInput();
   this.bindHeroPositionCheck();

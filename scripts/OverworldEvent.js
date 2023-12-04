@@ -86,6 +86,7 @@ class OverworldEvent{
     }
 
     changeMap(resolve) {
+        console.log(window.OverworldMaps[this.event.map]);
         if(this.event.map === "Lobby"){
             if(this.map.gameObjects.hero.inventory.length === 0){
                 console.log("test");
@@ -117,7 +118,7 @@ class OverworldEvent{
             });
         }
         
-        else if(this.event.map === "Dungeon"){
+        else{
             const sceneTransition = new SceneTransition();
                     sceneTransition.init(document.querySelector(".game-container"), () => {
                         this.map.removeWall(this.map.gameObjects.hero.x, this.map.gameObjects.hero.y);
@@ -131,7 +132,23 @@ class OverworldEvent{
     }
     changeRoom(resolve) {
         
-        }
+    }
+
+    enterDungeon(resolve){
+        let newDungeon = new DungeonCreator(this.ctx);
+        newDungeon.init();
+
+        
+        const sceneTransition = new SceneTransition();
+                    sceneTransition.init(document.querySelector(".game-container"), () => {
+                        this.map.removeWall(this.map.gameObjects.hero.x, this.map.gameObjects.hero.y);
+                        console.log(`../${newDungeon.dungeonMap[newDungeon.startingPoint.x][newDungeon.startingPoint.y].src})`);
+                        console.log(window.OverworldMaps[this.event.map]);
+                        this.map.overworld.startMap(window.OverworldMaps[this.event.map]);
+                        resolve();
+                        sceneTransition.fadeOut();
+                    });
+    }
 
 
     init(){

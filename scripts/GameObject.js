@@ -70,7 +70,18 @@ class GameObject {
       inv.remove();
       this.showInventory(map);
     }
-    
+    const item = inventory[0];
+
+    if (typeof item.useEffect !== 'function'){
+      const decorator = new ItemDecorator(item);
+  
+      decorator.addUseEffect();
+  
+      const decoratedItem = decorator.getItem();
+  
+      decoratedItem.useItem();
+      decoratedItem.useEffect();
+    }
   }
   
 }

@@ -1,6 +1,5 @@
 class DungeonCreator{
-    constructor(ctx) {
-        this.ctx = ctx;
+    constructor() {
         this.rows = 5;
         this.columns = 5;
         this.dungeonMap = this.createEmptyMap();
@@ -35,8 +34,8 @@ class DungeonCreator{
 
         while(RoomAmount > 0){
                 let currentRoom = {x: x,y: y};
-                let possible = utils.checkPossibilities(this.dungeonMap,x,y)
-                let nextRooms = Math.floor(Math.random() * possible) + 1;
+                let possible = utils.checkPossibilities(this.dungeonMap,x,y,0)
+                let nextRooms = Math.floor(Math.random() * possible) + 2;
                 let newRooms = [];
                 if(!visited.includes(currentRoom)){
                 for(let i = 3; i >= 0; i--){
@@ -74,16 +73,46 @@ class DungeonCreator{
             
         }
     }
-    
+    createRoom(x,y){
+        let exits = utils.checkPossibilities(this.dungeonMap, x,y,2) + utils.checkPossibilities(this.dungeonMap, x,y,1);
+        let directions = utils.checkDirections(this.dungeonMap,x,y)
+        let isStartingPoint = false;
+        if(x === this.startingPoint.x && y === this.startingPoint.y)
+            isStartingPoint = true;
+        let room = new Room({
+            src: "",
+        });
+        room.adjustRoom(exits, isStartingPoint, directions);
+        return room;
+    }
 
-    
-
-
+    createDungeon() {
+        let dungeonArray = [];
+      
+        this.dungeonMap.forEach((row, rowIndex) => {
+          let newRow = []; 
+      
+          row.forEach((element, columnIndex) => {
+            if (this.dungeonMap[rowIndex][columnIndex] === 1 || this.dungeonMap[rowIndex][columnIndex] === 2) {
+              newRow.push(this.createRoom(rowIndex, columnIndex));
+              console.log(`Room: ${rowIndex},${columnIndex}`, this.createRoom(rowIndex, columnIndex));
+            } else {
+              
+              newRow.push(this.dungeonMap[rowIndex][columnIndex]);
+            }
+          });
+      
+          dungeonArray.push(newRow);
+        });
+        return dungeonArray;
+      }
+      
 
     init() {
         this.generateDisplay();
-        console.log(this.dungeonMap)
-
+        this.dungeonMap = this.createDungeon();
+        console.log(this.dungeonMap);
+        
        
     }
 }
