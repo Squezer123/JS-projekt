@@ -14,6 +14,9 @@ class Overworld {
     const step = () => {
       //Clear off the canvas
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+      this.ctx.scale(1.5, 1.5);
+      
       const cameraPerson = this.map.gameObjects.hero;
       Object.values(this.map.gameObjects).forEach(object => {
         object.update({
@@ -33,7 +36,6 @@ class Overworld {
 
       //Draw Upper layer
       // this.map.drawUpperImage(this.ctx);
-      
       requestAnimationFrame(() => {
         step();   
       })
