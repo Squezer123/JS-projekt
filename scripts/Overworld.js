@@ -8,6 +8,8 @@ class Overworld {
    this.inventoryOpen = false;
    this.dungeonMap = [];
    this.currenPosition; 
+   this.ctx.imageSmoothingEnabled = false;
+   this.vision;
  }
 
   startGameLoop() {
@@ -17,22 +19,22 @@ class Overworld {
       this.ctx.setTransform(1, 0, 0, 1, 0, 0);
       this.ctx.scale(1.5, 1.5);
       
-      const cameraPerson = this.map.gameObjects.hero;
-      Object.values(this.map.gameObjects).forEach(object => {
-        object.update({
-          arrow: this.directionInput.direction,
-          map: this.map,
-        })
-      })
-      //Draw Lower layer
-      this.map.drawLowerImage(this.ctx, cameraPerson);
+      // const cameraPerson = this.map.gameObjects.hero;
+      // Object.values(this.map.gameObjects).forEach(object => {
+      //   object.update({
+      //     arrow: this.directionInput.direction,
+      //     map: this.map,
+      //   })
+      // })
+      // //Draw Lower layer
+      // this.map.drawLowerImage(this.ctx, cameraPerson);
 
-      //Draw Game Objects
-      Object.values(this.map.gameObjects).sort((a,b) => {
-        return a.y - b.y;
-      }).forEach(object => {
-        object.sprite.draw(this.ctx, cameraPerson, object.isObject);
-      })
+      // //Draw Game Objects
+      // Object.values(this.map.gameObjects).sort((a,b) => {
+      //   return a.y - b.y;
+      // }).forEach(object => {
+      //   object.sprite.draw(this.ctx, cameraPerson, object.isObject);
+      // })
 
       //Draw Upper layer
       // this.map.drawUpperImage(this.ctx);
@@ -80,6 +82,11 @@ class Overworld {
  }
 
  init() {
+  this.vision = new VisionChecker({ctx: this.ctx})
+  this.vision.setup();
+  this.vision.update();
+
+
   this.startMap(window.OverworldMaps.Lobby);
   this.showInventory();
   this.bindActionInput();
@@ -89,7 +96,7 @@ class Overworld {
   this.directionInput = new DirectionInput();
   this.directionInput.init();
 
-  this.startGameLoop();
+  // this.startGameLoop();
   // this.map.startCutscene();
  }
 }

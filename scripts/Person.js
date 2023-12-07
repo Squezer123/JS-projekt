@@ -5,7 +5,7 @@ class Person extends GameObject {
     this.isStanding = false;
     
 
-    this.isPlayerControlled = config.isPlayerControlled || false;
+    this.isPlayerControlled = false;
     this.useTile = utils.nextPosition(this.x,this.y,this.direction);
 
     this.directionUpdate = {
@@ -32,6 +32,9 @@ class Person extends GameObject {
     }
   }
 
+  setPlayerControlled(){
+    this.isPlayerControlled = true;
+  }
   startBehavior(state, behavior) {
     //Set character direction to whatever behavior has
     this.direction = behavior.direction;
