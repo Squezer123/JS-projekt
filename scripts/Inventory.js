@@ -1,6 +1,7 @@
 class Inventory {
     constructor({hero, map}) {
-        this.hero = hero
+        this.inventory = hero.inventory;
+        this.hero = hero;
         this.activeElement = 0;
         this.element = null;
         this.firstClick = true;
@@ -17,7 +18,7 @@ class Inventory {
 
         }
 
-        this.hero.inventory.forEach((item, index) => {
+        this.inventory.forEach((item, index) => {
            let src = item.image.src
            let invItem = document.createElement("img")
            invItem.classList.add("invImg");

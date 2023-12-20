@@ -6,10 +6,6 @@ class Room{
         this.image.src = config.src || "";
     }
 
-drawRoom(x,y,ctx){
-    ctx.drawImage(this.image, x, y);
-}
-
 adjustRoom(exits, isStartingPoint,directions){
     let firstLetters = utils.directionFirstLetters(directions);
     this.src = `Assets/Rooms/room${exits}${firstLetters}.png`;

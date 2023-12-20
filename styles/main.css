@@ -22,6 +22,7 @@ body:hover {
   cursor: url('../Assets/cursor_default.png'), pointer;
 }
 .game-container {
+  background: #25131A;
   position: relative; 
   width: 352px;
   height: 198px;

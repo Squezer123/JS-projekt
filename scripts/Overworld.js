@@ -19,24 +19,29 @@ class Overworld {
       this.ctx.setTransform(1, 0, 0, 1, 0, 0);
       this.ctx.scale(1.5, 1.5);
       
-      // const cameraPerson = this.map.gameObjects.hero;
-      // Object.values(this.map.gameObjects).forEach(object => {
-      //   object.update({
-      //     arrow: this.directionInput.direction,
-      //     map: this.map,
-      //   })
-      // })
-      // //Draw Lower layer
-      // this.map.drawLowerImage(this.ctx, cameraPerson);
+      const cameraPerson = this.map.gameObjects.hero;
+      Object.values(this.map.gameObjects).forEach(object => {
+        object.update({
+          arrow: this.directionInput.direction,
+          map: this.map,
+        })
+      })
+      // Draw Lower layer
+      this.map.drawLowerImage(this.ctx, cameraPerson);
 
-      // //Draw Game Objects
-      // Object.values(this.map.gameObjects).sort((a,b) => {
-      //   return a.y - b.y;
-      // }).forEach(object => {
-      //   object.sprite.draw(this.ctx, cameraPerson, object.isObject);
-      // })
 
-      //Draw Upper layer
+
+      const gameObjectsIterator = new GameObjectsIterator(this.map.gameObjects);
+
+      let nextObject = gameObjectsIterator.next();
+      while (!nextObject.done) {
+        const object = nextObject.value;
+        object.sprite.draw(this.ctx, cameraPerson, object.isObject);
+        nextObject = gameObjectsIterator.next();
+      }
+      // this.vision.update();
+      // this.vision.changed = true;
+      // // Draw Upper layer
       // this.map.drawUpperImage(this.ctx);
       requestAnimationFrame(() => {
         step();   
@@ -96,7 +101,7 @@ class Overworld {
   this.directionInput = new DirectionInput();
   this.directionInput.init();
 
-  // this.startGameLoop();
+  this.startGameLoop();
   // this.map.startCutscene();
  }
 }
