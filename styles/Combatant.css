@@ -1,0 +1,27 @@
+.Combatant {
+    width: 67px;
+    height: 14px;
+    position: absolute;
+    color: white;
+    font-size: 7px
+}
+
+.Combatant[data-team="player"]{
+    left: 30px;
+    top: 90px;
+}
+
+.Combatant[data-team="enemy"] {
+    top:20px;
+    right: 120px;
+}
+
+.Combatant_name, .Combatant_level, .Combatant_hp{
+    margin: 0;
+    padding: 0;
+}
+
+.Combatant_status{
+    margin: 0;
+    padding: 0; 
+}

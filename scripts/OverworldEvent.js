@@ -250,7 +250,16 @@ class OverworldEvent{
         });
       
         return newSpaces; 
-      }
+    }
+    fight(resolve){
+        const fight = new Fight({
+            onComplete: () =>{
+                resolve();
+            }
+        })
+
+        fight.init(document.querySelector(".game-container"));
+    }
 
     
 

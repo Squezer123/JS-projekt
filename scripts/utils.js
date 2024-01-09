@@ -90,7 +90,15 @@ const utils = {
         catch(e){}
     }
     return directions;
-  }
+  },
+
+  wait(ms){
+    return new Promise(resolve => {
+      setTimeout(()=>{
+        resolve()
+      }, ms)
+    })
+  },
 
   
 }

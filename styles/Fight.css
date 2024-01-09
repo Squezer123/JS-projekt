@@ -1,0 +1,81 @@
+.Fight{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: black;
+    background-size: cover;
+    image-rendering: pixelated;
+}
+
+.Fight_hero, .Fight_enemy{
+    position: absolute;
+    transform: scale(3);
+    width: 48px;
+    height: 48px;
+    overflow: hidden;
+}
+
+.Fight_hero img, .Fight_enemy img{
+    pointer-events: none;
+}
+.Fight_hero{
+    bottom: 57px;
+    left: 90px;
+}
+
+.Fight_hero img{
+    transform: translateY(-96px);
+}
+
+.Fight_enemy{
+    top: 20px;
+    right: 70px;
+    
+}
+
+.Fight_hero svg {
+    position: absolute;
+    top: 43px;
+    left: 14px;
+    width: 20px;
+    display: flex;
+}
+
+.Fight_enemy svg {
+    position: absolute;
+    top: 43px;
+    left: 15px;
+    width: 20px;
+}
+
+@keyframes battle-damage-blink {
+    to {
+        visibility: hidden;
+    }
+}
+
+.battle-damage-blink {
+    animation: battle-damage-blink 0.3s steps(2, start) infinite;
+}
+
+@keyframes battle-spin-right {
+    0% {transform: translate3d(0,0,0) rotate(0deg) scale(3)}
+    25% {transform: translate3d(100%,-25%,0) rotate(25deg) scale(4)}
+    100% {transform: translate3d(0,0,0) scale(3)}
+}
+
+.battle-spin-right {
+    animation: battle-spin-right 0.8s;
+}
+
+@keyframes battle-spin-left {
+    0% {transform: translate3d(0,0,0) rotate(0deg) scale(3)}
+    25% {transform: translate3d(-100%,25%,0) rotate(-25deg) scale(4)}
+    100% {transform: translate3d(0,0,0) scale(3)}
+}
+
+.battle-spin-left {
+    animation: battle-spin-left 0.8s;
+}

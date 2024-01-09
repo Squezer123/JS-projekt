@@ -87,11 +87,6 @@ class Overworld {
  }
 
  init() {
-  this.vision = new VisionChecker({ctx: this.ctx})
-  this.vision.setup();
-  this.vision.update();
-
-
   this.startMap(window.OverworldMaps.Lobby);
   this.showInventory();
   this.bindActionInput();
@@ -102,6 +97,8 @@ class Overworld {
   this.directionInput.init();
 
   this.startGameLoop();
-  // this.map.startCutscene();
+  this.map.startCutscene([
+    {type: "fight"}
+  ]);
  }
 }

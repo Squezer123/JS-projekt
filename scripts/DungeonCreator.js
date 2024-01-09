@@ -34,7 +34,7 @@ class DungeonCreator{
 
         while(RoomAmount > 0){
                 let currentRoom = {x: x,y: y};
-                let possible = utils.checkPossibilities(this.dungeonMap,x,y,0)
+                let possible = utils.checkPossibilities(this.dungeonMap,x,y,0);
                 let nextRooms = Math.floor(Math.random() * possible) + 2;
                 let newRooms = [];
                 if(!visited.includes(currentRoom)){

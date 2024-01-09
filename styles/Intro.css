@@ -1,0 +1,57 @@
+.logo{
+    animation: logo-fade-in 1.5s forwards;
+    position: absolute;
+    z-index: 9000;
+    width: 350px;
+    height: 350px;
+    top: 30vh;
+    margin: 0 auto;
+  }
+.tempBack{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    z-index: 4;
+}
+
+.tempBack.fadeOut{
+    animation: background-fade-out 1.2s forwards;
+}
+
+@keyframes background-fade-out{
+    from{
+        opacity: 1;
+    }
+    to{
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+.logo.intro{
+    animation: logo-intro 1.2s forwards;
+    animation-delay: 1.6s;
+}
+
+@keyframes logo-intro {
+    from{
+        width: 350px;
+        height: 350px;
+        
+    }
+    to{
+        width: 180px;
+        height: 180px;
+        top: 80px;
+    }
+}
+
+@keyframes logo-fade-in {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}

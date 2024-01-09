@@ -1,0 +1,22 @@
+.SubmissionMenu{
+    border: 1px solid red;
+    position: absolute;
+    z-index: 9001;
+    bottom: 20px;
+    right: 60px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100px;
+    justify-content: center;
+}
+
+.SubmissionMenu button{
+    font-size: 4px;
+    margin: 5px;
+    width: 30px;
+    
+}
+
+.SubmissionMenu button:hover{
+    cursor: url('../Assets/cursor_default.png'), pointer;
+}

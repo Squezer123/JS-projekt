@@ -3,13 +3,17 @@
 @import url(TextMessage.css);
 @import url(SceneTransition.css);
 @import url(Inventory.css);
+@import url(Intro.css);
 
 * {
   box-sizing:border-box;
 }
 
 body {
-  background: #333;
+  background: url("../Assets/backgroundv3.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
   padding: 0;
   margin: 0;
   overflow: hidden;
@@ -22,6 +26,7 @@ body:hover {
   cursor: url('../Assets/cursor_default.png'), pointer;
 }
 .game-container {
+  display: none;
   background: #25131A;
   position: relative; 
   width: 352px;
@@ -34,4 +39,99 @@ body:hover {
 
 .game-container canvas {
   image-rendering: pixelated;
+}
+
+.background{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  opacity: 0.5;
+}
+.loginForm{
+  color: white;
+  position: relative;
+  margin: 0 auto;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 300px;
+  height: 100vh;
+}
+
+
+.loginForm form{
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.loginForm form input{
+  background: none;
+  color: white;
+  font-family: inherit;
+  font-size: large;
+  width: 10rem;
+  height: 2rem;
+  border: 1px solid white;
+  border-radius: 4px;
+  margin: 10px 0;
+  padding: 5px;
+}
+
+.volumeChange{
+  position: absolute;
+  bottom: 10px;
+  right: 50px;
+  z-index: 9001;
+}
+
+#volumeSliderContainer {
+  display: none;
+  margin-bottom: 80px;
+  transform: rotate(-90deg); /* Obrót o 90 stopni */
+}
+
+
+#volumeSlider {
+  writing-mode: bt-lr; /* Pionowy suwak */
+  width: 150px; /* Długość suwaka */
+  appearance: none; /* Wyłącz domyślne style przeglądarki */
+  background:transparent; /* Kolor tła suwaka */
+  outline: none; /* Usuń podświetlenie fokusu */
+  border: none; /* Usuń obramowanie */
+  border-radius: 12px; /* Zaokrąglony suwak */
+  border: 1px solid red;
+  padding: 4px;
+}
+
+#volumeSlider::-webkit-slider-thumb {
+  appearance: none; /* Wyłącz domyślne style przeglądarki */
+  width: 15px; /* Szerokość kciuka suwaka */
+  height: 15px; /* Wysokość kciuka suwaka */
+  background-color: red; /* Kolor kciuka suwaka w przeglądarkach opartych na Chromium (np. Chrome, Edge) */
+  border-radius: 50%; /* Zaokrąglony kciuk suwaka */
+  cursor: pointer; /* Kursor w postaci strzałki, aby wskazywać na możliwość przeciągania */
+}
+
+#volumeSlider::-moz-range-thumb {
+  width: 15px; /* Szerokość kciuka suwaka w przeglądarkach opartych na Gecko (np. Firefox) */
+  height: 15px; /* Wysokość kciuka suwaka w przeglądarkach opartych na Gecko (np. Firefox) */
+  background-color: red; /* Kolor kciuka suwaka w przeglądarkach opartych na Gecko (np. Firefox) */
+  border-radius: 50%; /* Zaokrąglony kciuk suwaka w przeglądarkach opartych na Gecko (np. Firefox) */
+  cursor: pointer; /* Kursor w postaci strzałki, aby wskazywać na możliwość przeciągania */
+}
+
+#toggleVolumeButton{
+  box-shadow: none;
+  background: transparent;
+  color: red;
+  border: 1px solid red;
+  padding: 5px;
+  border-radius: 8px;
 }
