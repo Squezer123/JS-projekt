@@ -1,9 +1,19 @@
 class Person extends GameObject {
   constructor(config) {
     super(config);
+    this.name = config.nick || "";
     this.movingProgressRemaining = 0;
     this.isStanding = false;
-    
+    this.hp = config.hp || 50;
+    this.team = config.team || "player";
+    this.maxHp = config.maxHp || 50;
+    this.xp = config.xp || 0;
+    this.level = config.level || 5;
+    this.damageTakenMod = config.damageTakenMod || 1;
+    this.damageGivenMod = config.damageGivenMod || 1;
+    this.status = config.status || null;
+    this.isPlayerControlled = config.isPlayerControlled || true;
+    this.actions = config.actions || ["normalAttack", "strongAttack", "fastAttack", "clumsyStatus", "enragedStatus"];
 
     this.isPlayerControlled = false;
     this.useTile = utils.nextPosition(this.x,this.y,this.direction);

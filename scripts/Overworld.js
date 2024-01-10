@@ -97,8 +97,8 @@ class Overworld {
   this.directionInput.init();
 
   this.startGameLoop();
-  this.map.startCutscene([
-    {type: "fight"}
-  ]);
+  // this.map.startCutscene([
+  //   {type: "fight", enemyId: "c001"}
+  // ]);
  }
 }

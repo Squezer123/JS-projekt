@@ -126,15 +126,30 @@ window.OverworldMaps = {
     lowerSrc: "Assets/map.png",
     upperSrc: "Assets/map.png",
     gameObjects: {
-      npc1: new Person({
-        id: "npc1",
+      enemy1: new Person({
+        id: "c001",
         x: utils.withGrid(5),
         y: utils.withGrid(6),
       
         talking: [
           {
             events: [
-              {type: "textMessage", text:"Hello There", faceHero: "npc1"},
+              {type: "textMessage", text:"Hello There", faceHero: "enemy1"},
+              {type: "fight", enemyId: "c001",mapId: "enemy1"}
+            ]
+          }
+        ]
+      }),
+      enemy2: new Person({
+        id: "c001",
+        x: utils.withGrid(7),
+        y: utils.withGrid(7),
+      
+        talking: [
+          {
+            events: [
+              {type: "textMessage", text:"Hello There", faceHero: "enemy2"},
+              {type: "fight", enemyId: "c001",mapId: "enemy2"}
             ]
           }
         ]

@@ -1,7 +1,8 @@
 class TurnCycle {
-    constructor({battle, onNewEvent}){
+    constructor({battle, onNewEvent, onWinner}){
         this.battle = battle;
         this.onNewEvent = onNewEvent;
+        this.onWinner = onWinner;
         this.currentTeam = "enemy";
     }
 
@@ -18,7 +19,12 @@ class TurnCycle {
             enemy
         })
 
-        const resoultingEvents = submission.action.success;
+        if(submission.instanceId){
+            this.battle.items = this.battle.items.filter(i => i.instanceId !== submission.instanceId);
+        }
+
+        const resoultingEvents = caster.getReplacedEvents(submission.action.success);
+        
         for(let i=0; i<resoultingEvents.length; i++){
             const event = {
                 ...resoultingEvents[i],
@@ -28,6 +34,38 @@ class TurnCycle {
                 target: submission.target,
             }
             await this.onNewEvent(event);
+        }
+
+        
+        const targetDead = submission.target.hp <= 0;
+        const winner = this.getWinningTeam();
+        if (targetDead){
+            await this.onNewEvent({
+                type: "textMessage", text:`${submission.target.name} has fallen`
+            })
+            const winnerId = this.battle.activeCombatants[winner]
+            const xp = submission.target.givesXp;
+
+            await this.onNewEvent({
+                type: "textMessage", text: `You got ${xp}xp!`
+            })
+            if(submission.target.team === "enemy"){
+                await this.onNewEvent({
+                    type: "giveXp",
+                    xp,
+                    combatant: this.battle.combatants[winnerId]
+                })
+            }
+            
+        }
+        
+        if (winner) {
+        await this.onNewEvent({
+            type: "textMessage",
+            text: "Winner!"
+        })
+        this.onWinner(winner);
+        return;
         }
 
         const postEvenets = caster.getPostEvents();
@@ -47,16 +85,32 @@ class TurnCycle {
             await this.onNewEvent(expiredEvent);
         }
 
+        this.nextTurn();
+    }
+
+    nextTurn(){
         this.currentTeam = this.currentTeam === "player" ? "enemy" : "player";
         this.turn();
     }
 
-    async init(){
-        console.log("wykonuje się")
-        await this.onNewEvent({
-            type: "textMessage",
-            text: "Let the battle begin"
+    getWinningTeam() {
+        let aliveTeams = {};
+        Object.values(this.battle.combatants).forEach(c => {
+          if (c.hp > 0) {
+            aliveTeams[c.team] = true;
+          }
         })
+        if (!aliveTeams["player"]) { return "enemy"}
+        if (!aliveTeams["enemy"]) { return "player"}
+        return null;
+      }
+
+    async init(){
+        // console.log("wykonuje się")
+        // await this.onNewEvent({
+        //     type: "textMessage",
+        //     text: "Let the battle begin"
+        // })
 
         this.turn();
     }

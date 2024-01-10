@@ -11,7 +11,9 @@ class Combatant{
         return percent > 0 ? percent : 0;
     }
 
-
+    get givesXp(){
+        return this.level * 20;
+    }
 
     get isActive() {
         return this.fight.activeCombatants[this.team] === this.id
@@ -51,6 +53,16 @@ class Combatant{
             statusElement.innerText = "";
             statusElement.style.display = "none";
         }
+    }
+
+    getReplacedEvents(originEvents){
+
+        if(this.status?.type === "clumsy" && utils.randomFromArray([true,false,false])){
+            return [
+                { type: "textMessage", text: `${this.name} flops over!`},
+            ]
+        }
+        return originEvents;
     }
 
     getPostEvents(){

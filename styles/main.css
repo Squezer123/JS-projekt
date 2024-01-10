@@ -4,6 +4,7 @@
 @import url(SceneTransition.css);
 @import url(Inventory.css);
 @import url(Intro.css);
+@import url(KeyboardMenu.css);
 
 * {
   box-sizing:border-box;
@@ -26,13 +27,13 @@ body:hover {
   cursor: url('../Assets/cursor_default.png'), pointer;
 }
 .game-container {
-  display: none;
+  display: block;
   background: #25131A;
   position: relative; 
   width: 352px;
   height: 198px;
   margin: 0 auto;
-  outline: 1px solid #fff;
+  outline: 1px solid red;
 
   transform: scale(3) translateY(50%);
 }

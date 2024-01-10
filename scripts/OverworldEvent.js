@@ -252,7 +252,11 @@ class OverworldEvent{
         return newSpaces; 
     }
     fight(resolve){
+        console.log(this.event.enemyId)
         const fight = new Fight({
+            map: this.map,
+            mapId: this.event.mapId,
+            enemy: Enemies[this.event.enemyId],
             onComplete: () =>{
                 resolve();
             }

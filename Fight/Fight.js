@@ -1,48 +1,43 @@
 class Fight {
-    constructor() {
+    constructor({enemy, onComplete,mapId,map}) {
+        this.enemy = enemy;
+        this.onComplete = onComplete;
+        this.mapId = mapId;
+        this.map = map;
         this.combatants = {
-            "player1": new Combatant({
-                name: 'Gracz',
-                hp:50,
-                team: "player",
-                maxHp:50,
-                xp: 0,
-                level: 5,
-                damageTakenMod: 1,
-                damageGivenMod: 1,
-                status: {
-                    type: "Enraged",
-                    expiresIn: 3
-                },
-                actions: ["damage1"]
-            },this),
-            "enemy1": new Combatant({
-                ...Enemies.c001,
-                hp:50,
-                team: "enemy",
-                maxHp:50,
-                damageTakenMod: 1,
-                damageGivenMod: 1,
-                xp: 0,
-                level: 1,
-                status: null
-            },
-            this),
-            // "enemy2": new Combatant({
+            // "player1": new Combatant({
+            //     name: 'Gracz',
+            //     ...heroInstance
+            // },this),
+            // "enemy1": new Combatant({
             //     ...Enemies.c001,
-            //     hp:30,
-            //     team: "enemy",
-            //     maxHp:50,
-            //     xp: 0,
-            //     level: 1,
-            //     status: null
             // },
-            // this)
+            // this),
+            
         };
+        this.addCombatants();
         this.activeCombatants = {
-            player: "player1",
-            enemy: "enemy1",
+            player: "player",
+            enemy: "enemy",
         }
+
+        this.items = [
+            { actionId: "item_recoverStatus", instanceId: "p1", team: "player" },
+            { actionId: "item_recoverStatus", instanceId: "p2", team: "player" },
+            { actionId: "item_recoverStatus", instanceId: "p3", team: "enemy" }
+        ]
+    }
+    
+    addCombatants(){
+        this.combatants['player'] = new Combatant({
+            ...heroInstance
+        },this)
+        this.combatants['enemy'] = new Combatant({
+            ...this.enemy
+        },this)
+        console.log(this.activeCombatants)
+        console.log(this);
+        
     }
 
     createElement() {
@@ -76,6 +71,20 @@ class Fight {
                     const fightEvent = new FightEvent(event, this)
                     fightEvent.init(resolve);
                 })
+            },
+            onWinner: winner => {
+                
+                if(winner === "player"){
+                    const playerCombatant = this.combatants["player"]
+                    heroInstance.hp = playerCombatant.hp;
+                    heroInstance.xp = playerCombatant.xp;
+                    
+                    const tempEnemy = OverworldMaps.Lobby.gameObjects[this.mapId];
+                    this.map.removeWall(tempEnemy.x, tempEnemy.y)
+                    delete this.map.gameObjects[this.mapId]
+                }
+                this.element.remove();
+                this.onComplete();
             }
         })
 

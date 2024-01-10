@@ -1,0 +1,66 @@
+.KeyboardMenu {
+    border: 1px solid red;
+    background: black;
+    position: absolute;
+}
+
+.KeyboardMenu button {
+    color: red;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    text-align: left;
+    -webkit-appearance: none;
+    border: 0;
+    background: none;
+    height: 20px;
+    cursor: inherit;
+    font-family: inherit;
+    padding: 0;
+    padding-left: 1rem;
+    font-size: 10px;
+}
+
+.KeyboardMenu button:focus{
+    background: red;
+    outline: 0;
+    color: black;
+}
+
+.KeyboardMenu button:disabled{
+    color: rgb(187, 88, 88);
+}
+
+.KeyboardMenu .option {
+    position: relative;
+}
+
+.KeyboardMenu .option .right {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    color: inherit;
+}
+
+.Fight .KeyboardMenu {
+    right: 0;
+    bottom: 2px;
+    width: 140px;
+}
+
+.DescriptionBox{
+    color: red;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid red;
+    background-color: black;
+    padding: 2px;
+}
+
+.DescriptionBox p {
+    font-size: 10px;
+    margin: 0;
+}
