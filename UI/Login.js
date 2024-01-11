@@ -16,10 +16,11 @@ document.querySelector(".registerSwitch").addEventListener("click",()=>{
     loginForm.style.display = "none";
 })
 
-loginButton.addEventListener("click", ()=>{
+loginButton.addEventListener("click", async ()=>{
     formContainer.style.display = "none";
     gameContainer.style.display = "none";
-    // initGame();
     let newChar = new CreateCharacter();
-    newChar.createElement();
+    await newChar.init();
+    let selectedClass = newChar.selectedClass;
+    initGame(selectedClass);
 })

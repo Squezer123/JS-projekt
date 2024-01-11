@@ -6,11 +6,11 @@
 //     overworld.init();
 // })();
 
-let initGame = () => {
+let initGame = (selectedClass) => {
   const gameElement = document.querySelector(".game-container");
   gameElement.style.display = "block";
   const overworld = new Overworld({
-    hero: new Player('TestNicku'),
+    hero: new Player('TestNicku',selectedClass),
     element: document.querySelector(".game-container")
   });
     overworld.init();

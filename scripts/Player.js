@@ -1,11 +1,12 @@
 class Player{
-    constructor(nick){
+    constructor(nick,selectedClass){
         if(window.heroInstance){
             return window.heroInstance;
         }
         
         window.heroInstance = new Person({
             nick: nick,
+            class: selectedClass,
             id: "hero",
             x: utils.withGrid(1),
             y: utils.withGrid(1),
