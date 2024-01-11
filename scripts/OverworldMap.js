@@ -180,7 +180,7 @@ window.OverworldMaps = {
           {
             events: [
               {who: "hero", type: "stand", direction: "right"},
-              {type: "textMessage", text:"Once you go in there, it may be hard to come back...", faceHero: "npc1"},
+              {type: "textMessage", text:"Once you go in there, it may be hard to come back...", faceHero: "enemy1"},
               {type: "enterDungeon", map:"Room"},
             ]
         }

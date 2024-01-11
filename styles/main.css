@@ -5,6 +5,7 @@
 @import url(Inventory.css);
 @import url(Intro.css);
 @import url(KeyboardMenu.css);
+@import url(CreateCharacter.css);
 
 * {
   box-sizing:border-box;
@@ -20,7 +21,8 @@ body {
   overflow: hidden;
   font-family: 'VT323', monospace;
   cursor: url('../Assets/cursor_default.png'), auto;
-
+  display: grid;
+  place-items: center;
 }
 
 body:hover {
@@ -65,11 +67,31 @@ body:hover {
 
 
 .loginForm form{
+  cursor: inherit;
   z-index: 2;
   display: flex;
   justify-content: center;
   flex-direction: column;
   flex-wrap: wrap;
+}
+.loginForm form button{
+  margin-top: 10px;
+  border-radius: 4px;
+  align-self: center;
+  width: 80px;
+  padding: 5px;
+  font: inherit;
+  color: white;
+  border: none;
+  outline: 1px solid white;
+  background: transparent;
+  backdrop-filter: blur(2px);
+}
+
+.loginForm form button:hover{
+  color: black;
+  background: white;
+  cursor: inherit;
 }
 
 .loginForm form input{
@@ -135,4 +157,37 @@ body:hover {
   border: 1px solid red;
   padding: 5px;
   border-radius: 8px;
+}
+
+.switchFormsContainer{
+  cursor: inherit;
+  margin-top: 40px;
+  flex-direction: row;
+  justify-content: space-between;
+  display: flex;
+  height: 50px;
+  z-index: 3;
+}
+
+.switchFormsContainer button {
+  border: 0;
+  border-radius: 4px;
+  color: white;
+  font: inherit;
+  margin: 5px;
+  width: 70px;
+  height: 30px;
+  outline: 1px solid white;
+  background: transparent;
+  backdrop-filter: blur(2px);
+}
+
+.switchFormsContainer button:hover{
+  color: black;
+  background: white;
+  cursor: inherit;
+}
+
+.register{
+  display: none !important;
 }
