@@ -20,7 +20,7 @@ body {
   margin: 0;
   overflow: hidden;
   font-family: 'VT323', monospace;
-  cursor: url('../Assets/cursor_default.png'), auto;
+  cursor: url('../Assets/cursor_default.png'), auto !important;
   display: grid;
   place-items: center;
 }

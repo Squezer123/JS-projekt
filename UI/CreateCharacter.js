@@ -13,7 +13,7 @@ class CreateCharacter{
                 <div
                     class="box box-1"
                     style="--img: url(../Assets/CharImages/mage.jpg)"
-                    data-text="Mage"
+                    data-text="Wizard"
                 ></div>
                 <div
                     class="box box-2"
