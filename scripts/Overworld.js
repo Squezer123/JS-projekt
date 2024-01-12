@@ -87,7 +87,12 @@ class Overworld {
  }
 
  init() {
+
+  this.hud = new Hud();
+  this.hud.init(document.querySelector(".game-container"));
+
   this.startMap(window.OverworldMaps.Lobby);
+
   this.showInventory();
   this.bindActionInput();
   this.bindHeroPositionCheck();

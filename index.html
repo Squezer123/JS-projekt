@@ -20,20 +20,20 @@
         <button class="loginSwitch">Sign in</button>
         <button class="registerSwitch">Sign up</button>
       </div>
-      <form class="login"onsubmit="return validateForm()">
-        <label for="username">Nazwa użytkownika:</label>
-        <input type="text" id="username" name="username" required>
-
-        <label for="password">Hasło:</label>
-        <input type="password" id="password" name="password" required>
-        <button class="submitLogin" type="submit">Zaloguj</button>
-      </form>
-      <form class="register">
+      <form id="loginForm" class="login" onsubmit="return validateForm()">
         <label for="username">Nazwa użytkownika:</label>
         <input type="text" id="username" name="username" required>
     
         <label for="password">Hasło:</label>
         <input type="password" id="password" name="password" required>
+        <button class="submitLogin" type="submit">Zaloguj</button>
+    </form>
+      <form class="register" id="registerForm">
+        <label for="username">Nazwa użytkownika:</label>
+        <input type="text" id="registerUsername" name="username" required>
+    
+        <label for="password">Hasło:</label>
+        <input type="password" id="registerPassword" name="password" required>
     
         <label for="confirm_password">Potwierdź hasło:</label>
         <input type="password" id="confirm_password" name="confirm_password" required>
@@ -73,6 +73,7 @@
     <script src="scripts/RevealingText.js"></script>
     <script src="scripts/SceneTransition.js"></script>
     <script src="scripts/KeyboardMenu.js"></script>
+    <script src="scripts/Hud.js"></script>
     <script src="scripts/Player.js"></script>
     <script src="Content/Enemies.js"></script>
     <script src="Content/Actions.js"></script>

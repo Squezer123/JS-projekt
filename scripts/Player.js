@@ -5,7 +5,7 @@ class Player{
         }
         
         window.heroInstance = new Person({
-            nick: nick,
+            name: nick,
             class: selectedClass,
             id: "hero",
             x: utils.withGrid(1),

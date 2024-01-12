@@ -1,7 +1,7 @@
 class Person extends GameObject {
   constructor(config) {
     super(config);
-    this.name = config.nick || "";
+    this.name = config.name || "";
     this.class = config.class || "";
     this.movingProgressRemaining = 0;
     this.isStanding = false;

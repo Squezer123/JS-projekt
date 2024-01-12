@@ -1,4 +1,4 @@
-const socket = io.connect('ws://localhost:3000', { transports: ["websocket"] });  // Use http instead of ws
+const socket = io.connect('ws://localhost:3000', { transports: ["websocket"] });
 
 socket.emit('clientEvent', { message: 'Test' });
 
