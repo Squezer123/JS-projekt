@@ -87,34 +87,15 @@ class OverworldEvent{
 
     changeMap(resolve) {
         if(this.event.map === "Lobby"){
-            if(this.map.gameObjects.hero.inventory.length === 0){
-                console.log("test");
-                    const message = new TextMessage({
-                        text: "U need a key to leave this place...",
-                        onComplete: () => resolve() 
-                     })
-                     message.init(document.querySelector(".game-container"));
-            }
-            this.map.gameObjects.hero.inventory.forEach(element => {
-                if(element.name === "key"){
-                    const sceneTransition = new SceneTransition();
-                    sceneTransition.init(document.querySelector(".game-container"), () => {
-                        this.map.removeWall(this.map.gameObjects.hero.x, this.map.gameObjects.hero.y);
-                        this.map.overworld.startMap(window.OverworldMaps[this.event.map]);
-                        console.log(this.event.map)
-                        resolve();
-                        sceneTransition.fadeOut();
-                    });
-                }else{
-                    console.log("test");
-                    const message = new TextMessage({
-                        text: "U need a key to leave this place...",
-                        onComplete: () => resolve() 
-                     })
-                     message.init(document.querySelector(".game-container"));
-                }
-
+            const sceneTransition = new SceneTransition();
+            sceneTransition.init(document.querySelector(".game-container"), () => {
+                this.map.removeWall(this.map.gameObjects.hero.x, this.map.gameObjects.hero.y);
+                this.map.overworld.startMap(window.OverworldMaps[this.event.map]);
+                console.log(this.event.map)
+                resolve();
+                sceneTransition.fadeOut();
             });
+           
         }
         
         else{
@@ -132,7 +113,6 @@ class OverworldEvent{
     changeRoom(resolve) {
         let x = this.map.overworld.currenPosition.x;
         let y = this.map.overworld.currenPosition.y;
-        console.log(x,y)
         let dungeon = this.map.overworld.dungeonMap;
         let Room = {
             lowerSrc: "Assets/Rooms/room4UDRL.png",
@@ -181,7 +161,23 @@ class OverworldEvent{
         let Room = {
             lowerSrc: "Assets/Rooms/room4UDRL.png",
             upperSrc: "Assets/test.png",
-            gameObjects: {},
+            gameObjects: {
+                enemy1: new Person({
+                    id: "c001",
+                    onCooldown: [],
+                    x: utils.withGrid(2),
+                    y: utils.withGrid(2),
+                  
+                    talking: [
+                      {
+                        events: [
+                          {type: "textMessage", text:"Hello There", faceHero: "enemy1"},
+                          {type: "fight", enemyId: "c001",mapId: "enemy1"}
+                        ]
+                      }
+                    ]
+                  }),
+            },
             walls:{},
             cutsceneSpaces: {},
             polygon:[
@@ -257,12 +253,39 @@ class OverworldEvent{
             map: this.map,
             mapId: this.event.mapId,
             enemy: Enemies[this.event.enemyId],
-            onComplete: () =>{
+            onComplete: async () =>{
+                if(heroInstance.hp <= 0){
+                        document.querySelector(".game-container").style.display = 'none';
+                        this.map.isPaused = true;
+                        let newChar = new CreateCharacter();
+                        await newChar.init();
+                        let selectedClass = newChar.selectedClass;
+                        heroInstance = new Player('test', selectedClass, true);
+                        document.querySelector(".game-container").style.display = 'block';
+                        console.log("nowy hero",heroInstance);
+                    this.event.map = "Lobby";
+                    this.changeMap(resolve);
+                    this.map.isPaused = false;
+                    this.map.overworld.startGameLoop();
+                }
                 resolve();
+                this.map.overworld.hud.update();
             }
         })
 
         fight.init(document.querySelector(".game-container"));
+    }
+
+    pause(resolve){
+        this.map.isPaused = true;
+        const menu = new PauseMenu({
+            onComplete: () => {
+                resolve();
+                this.map.isPaused = false;
+                this.map.overworld.startGameLoop();
+            }
+        });
+        menu.init(document.querySelector(".game-container"));
     }
 
     

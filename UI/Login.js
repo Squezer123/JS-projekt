@@ -4,6 +4,10 @@ const loginButton = document.querySelector(".submitLogin");
 const registerButton = document.getElementById('registerForm')
 const formContainer = document.querySelector(".loginForm");
 const gameContainer = document.querySelector(".game-container");
+const socket = new Websocket();
+socket.init();
+
+cookies.clearCookies();
 
 document.querySelector(".loginSwitch").addEventListener("click",()=>{
     if(!registerForm.classList.contains("register"))
@@ -18,22 +22,20 @@ document.querySelector(".registerSwitch").addEventListener("click",()=>{
 
 loginButton.addEventListener("click", async (event) => {
     event.preventDefault();
-    // Pobierz dane z formularza
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    // Wyślij zdarzenie 'login' z danymi do serwera
-    socket.emit('login', { username, password });
+    socket.socket.emit('login', { username, password });
 
-    // Nasłuchuj zdarzenia 'loginResponse' od serwera
-    socket.on('loginResponse', (data) => {
+    socket.socket.on('loginResponse', (data) => {
         if (data.success) {
+            cookies.addCookie("username",data.username,60);
             formContainer.style.display = "none";
             gameContainer.style.display = "none";
             let newChar = new CreateCharacter();
             newChar.init().then(() => {
                 let selectedClass = newChar.selectedClass;
-                initGame(selectedClass);
+                initGame(cookies.getCookieData("username"),selectedClass);
             });
         } else {
 
@@ -56,9 +58,9 @@ registerButton.addEventListener('submit', (event) => {
         return;
     }
 
-    socket.emit('register', { username, password });
+    socket.socket.emit('register', { username, password });
 
-    socket.on('registerResponse', (data) => {
+    socket.socket.on('registerResponse', (data) => {
         if (data.success) {
             alert(data.message); 
             if(!registerForm.classList.contains("register"))

@@ -1,13 +1,17 @@
 class Hud{
     constructor(){
-
+        this.scoreboard;
     }
 
     update(){
-
+        console.log("skad biore hp",heroInstance);
+        const hp = heroInstance.hp;
+        this.scoreboard.update({
+            hp: hp,
+        })
     }
     
-    createElement(container){
+    createElement(){
         this.element = document.createElement("div");
         this.element.classList.add("Hud");
 
@@ -17,20 +21,19 @@ class Hud{
         const maxHp = heroInstance.maxHp;
         const hp = heroInstance.hp;
         
-        const scoreboard = new Combatant({
+        this.scoreboard = new Combatant({
             name,
             maxHp,
             hp,
 
         },null)
 
-        scoreboard.createElement();
-        this.element.appendChild(scoreboard.hudElement)
-        console.log(name, maxHp, hp)
+        this.scoreboard.createElement();
+        this.element.appendChild(this.scoreboard.hudElement)
     } 
 
     init(container){
-        this.createElement(container);
+        this.createElement();
         container.appendChild(this.element);
     }
 }

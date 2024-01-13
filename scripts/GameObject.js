@@ -51,37 +51,5 @@ class GameObject {
 
     this.doBehaviorEvent(map);
   }
-
-  showInventory(map){
-        console.log(this.inventory);
-        const inventory = new Inventory({
-            map: map,
-            hero: this,
-            onComplete: () => resolve() 
-         })
-         inventory.init(document.querySelector(".game-container"));
-  }
-
-  addToInventory(inventory,map){
-    this.inventory.push(inventory[0]);
-    let inv = document.querySelector(".Inventory");
-    if(inv)
-    {
-      inv.remove();
-      this.showInventory(map);
-    }
-    const item = inventory[0];
-
-    if (typeof item.useEffect !== 'function'){
-      const decorator = new ItemDecorator(item);
-  
-      decorator.addUseEffect();
-  
-      const decoratedItem = decorator.getItem();
-  
-      decoratedItem.useItem();
-      decoratedItem.useEffect();
-    }
-  }
   
 }

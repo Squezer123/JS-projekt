@@ -17,8 +17,8 @@ class Fight {
         };
         this.addCombatants();
         this.activeCombatants = {
-            player: "player",
             enemy: "enemy",
+            player: "player",
         }
 
         this.items = [
@@ -35,9 +35,7 @@ class Fight {
         this.combatants['enemy'] = new Combatant({
             ...this.enemy
         },this)
-        console.log(this.activeCombatants)
-        console.log(this);
-        
+        console.log(this.combatants);
     }
 
     createElement() {
@@ -82,6 +80,11 @@ class Fight {
                     const tempEnemy = OverworldMaps.Lobby.gameObjects[this.mapId];
                     this.map.removeWall(tempEnemy.x, tempEnemy.y)
                     delete this.map.gameObjects[this.mapId]
+                }
+                if(winner === "enemy"){
+                    const playerCombatant = this.combatants["player"]
+                    heroInstance.hp = playerCombatant.hp;
+                    heroInstance.xp = playerCombatant.xp;
                 }
                 this.element.remove();
                 this.onComplete();

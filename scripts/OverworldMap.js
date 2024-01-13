@@ -13,7 +13,7 @@ class OverworldMap {
     this.upperImage.src = config.upperSrc;
 
     this.isCutscenePlaying = false;
-
+    this.isPaused = false;
 
   }
 
@@ -128,6 +128,7 @@ window.OverworldMaps = {
     gameObjects: {
       enemy1: new Person({
         id: "c001",
+        onCooldown: [],
         x: utils.withGrid(5),
         y: utils.withGrid(6),
       
@@ -285,7 +286,21 @@ window.OverworldMaps = {
           }
         ]
       }),
+      enemy1: new Person({
+        id: "c001",
+        onCooldown: [],
+        x: utils.withGrid(5),
+        y: utils.withGrid(6),
       
+        talking: [
+          {
+            events: [
+              {type: "textMessage", text:"Hello There", faceHero: "enemy1"},
+              {type: "fight", enemyId: "c001",mapId: "enemy1"}
+            ]
+          }
+        ]
+      }),
     },
     walls:{
     },

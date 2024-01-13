@@ -21,16 +21,24 @@ class FightEvent {
 
     async stateChange(resolve){
         console.log(this.event);
-        const {caster, target, damage,damageT,damageG, status, action} = this.event
+        const {caster, target, damage,damageT,damageG, status, action, selfDamage, cooldown, label} = this.event
         const who = this.event.onCaster ? caster : target;
 
-        const targetDiv = target.team === "player" ? document.querySelector(".Fight_hero") : document.querySelector(".Fight_enemy");
+        const targetDiv = who.team === "player" ? document.querySelector(".Fight_hero") : document.querySelector(".Fight_enemy");
         if(damage){
             targetDiv.classList.add("battle-damage-blink");            
-            target.update({
-                hp: target.hp - damage * target.damageTakenMod * caster.damageGivenMod
+            who.update({
+                hp: who.hp - damage * target.damageTakenMod * caster.damageGivenMod
             })
             await utils.wait(600);
+        }
+
+        if(selfDamage){
+            targetDiv.classList.add("battle-damage-blink");   
+            who.update({
+                hp: who.hp - selfDamage
+            })
+            await utils.wait(600);  
         }
 
         if(damageT){
@@ -42,6 +50,19 @@ class FightEvent {
         if(damageG){
             who.update({
                 damageGivenMod: damageG
+            })
+        }
+        if(cooldown){
+            console.log("wykonuje sie cooldown");
+            console.log("czyj cd",who)
+            let tempArr = who.onCooldown;
+            let newCD = {
+                label: label,
+                turns: cooldown
+            }
+            tempArr.push(newCD);
+            who.update({
+                onCooldown: tempArr
             })
         }
 
@@ -56,6 +77,7 @@ class FightEvent {
                 status: null
             })
         }
+
 
         targetDiv.classList.remove("battle-damage-blink");
         resolve();

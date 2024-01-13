@@ -1,28 +1,44 @@
 class Player{
-    constructor(nick,selectedClass){
-        if(window.heroInstance){
+    constructor(nick,selectedClass,restart){
+        this.restart = restart
+        this.classStats;
+        this.selectedClass = selectedClass;
+        this.setStats();
+
+        if(window.heroInstance && this.restart === false){
             return window.heroInstance;
         }
-        
+    
         window.heroInstance = new Person({
+            ...this.classStats,
             name: nick,
-            class: selectedClass,
             id: "hero",
             x: utils.withGrid(1),
             y: utils.withGrid(1),
             inventory: [],
-            hp:50,
             team: "player",
-            maxHp:50,
             xp: 0,
-            level: 5,
+            level: 1,
             damageTakenMod: 1,
             damageGivenMod: 1,
             status: null,
             isPlayerControlled: true,
-            actions: ["normalAttack","strongAttack","fastAttack","clumsyStatus","enragedStatus"]
           });
+
+        
         window.heroInstance.setPlayerControlled(true)
         return window.heroInstance
+    }
+
+    setStats(){
+        if(this.selectedClass === "Rogue"){
+            this.classStats = classes['Rogue'];
+        }
+        if(this.selectedClass === "Wizard"){
+            this.classStats = classes['Wizard'];
+        }
+        if(this.selectedClass === "Warior"){
+            this.classStats = classes['Warior'];
+        }
     }
 }

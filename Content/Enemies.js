@@ -4,6 +4,7 @@ window.EnemyTypes = {
     enhacned: "enhanced",
 }
 
+
 window.Enemies = {
     "n001": {
         name: "Wkurwiony Roman",
@@ -12,10 +13,11 @@ window.Enemies = {
         actions: ["damage1"]
     },
     "c001": {
+        onCooldown: [],
         name: "XYZ",
         type: EnemyTypes.normal,
         src: "../Assets/skeleton2_v2_1.png",
-        actions: ["strongAttack","damage1"],
+        actions: ["death","strongAttack","damage1"],
         hp:10,
         team: "enemy",
         maxHp:50,

@@ -16,7 +16,7 @@ class Combatant{
     }
 
     get isActive() {
-        return this.fight.activeCombatants[this.team] === this.id
+        return this.fight?.activeCombatants[this.team] === this.id
     }
 
     createElement(){
@@ -27,7 +27,7 @@ class Combatant{
         this.hudElement.innerHTML = (`
         <p class="Combatant_name">${this.name}</p>
         <svg viewBox="0 0 26 2" class="Combatant_life-container">
-                <rect x=0 y=0 width="100%" height=2 fill="green" />
+                <rect x=0 y=0 width="100%" height=2 fill="red" />
         </svg>
         <p class="Combatant_status"></p>
         `)
@@ -38,7 +38,7 @@ class Combatant{
         Object.keys(changes).forEach(key => {
             this[key] = changes[key]
         });
-
+  
         this.hudElement.setAttribute("data-active", this.isActive);
 
         this.hpFills.forEach(rect => rect.style.width = `${this.hpPercent}%`)
@@ -62,6 +62,12 @@ class Combatant{
                 { type: "textMessage", text: `${this.name} flops over!`},
             ]
         }
+        if(this.status?.type === "stunned"  && utils.randomFromArray([true])){
+            return [
+                { type: "textMessage", text: `${this.name} is stunned!`},
+            ]
+        }
+        
         return originEvents;
     }
 
@@ -72,10 +78,30 @@ class Combatant{
                 { type: "stateChange", damageG: 1.25, onCaster: true}
             ]
         }
+        if(this.status?.type === "poisoned"){
+            return [
+                {type: "stateChange", selfDamage: 10, onCaster: true},
+            ]
+        }
         return [];
     }
 
     decrementStatus(){
+        if(this.onCooldown.length > 0 ){
+            let newArr = this.onCooldown;
+            console.log("tymaczasowa tablica:",newArr);
+            newArr.forEach((el, index) => {
+                if(el.turns > 0)
+                    el.turns -= 1;
+                        if(el.turns === 0){
+                            delete newArr[index];
+                            console.log("Nowy array:",newArr);
+                            this.update({
+                                onCooldown: newArr
+                            })
+                        }
+            })
+        }
         if(this.status?.expiresIn > 0 ){
             this.status.expiresIn -= 1;
             if(this.status.expiresIn === 0){

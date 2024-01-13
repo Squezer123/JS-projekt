@@ -3,10 +3,11 @@ class TurnCycle {
         this.battle = battle;
         this.onNewEvent = onNewEvent;
         this.onWinner = onWinner;
-        this.currentTeam = "enemy";
+        this.currentTeam = Math.random() < 0.5 ? "player" : "enemy";
     }
 
     async turn(){
+        
         const casterId = this.battle.activeCombatants[this.currentTeam]
         const caster = this.battle.combatants[casterId]
 
@@ -36,14 +37,40 @@ class TurnCycle {
             await this.onNewEvent(event);
         }
 
-        
-        const targetDead = submission.target.hp <= 0;
+
+        const postEvenets = caster.getPostEvents();
+        for(let i=0; i<postEvenets.length; i++){
+            const event = {
+                ...postEvenets[i],
+                submission,
+                action: submission.action,
+                caster,
+                target: submission.target
+            }
+            await this.onNewEvent(event);
+        }
+
+        const expiredEvent = caster.decrementStatus();
+        if(expiredEvent){
+            await this.onNewEvent(expiredEvent);
+        }
+
         const winner = this.getWinningTeam();
-        if (targetDead){
+        const winnerId = this.battle.activeCombatants[winner]
+        let loserId;
+
+        if (winnerId === 'player') {
+            loserId = 'enemy';
+        } else if (winnerId === 'enemy') {
+            loserId = 'player';
+        } 
+        const loser = this.battle.combatants[loserId];
+
+        if (winner){
             await this.onNewEvent({
-                type: "textMessage", text:`${submission.target.name} has fallen`
+                type: "textMessage", text:`${loser.name} has fallen`
             })
-            const winnerId = this.battle.activeCombatants[winner]
+            
             const xp = submission.target.givesXp;
 
             await this.onNewEvent({
@@ -66,23 +93,6 @@ class TurnCycle {
         })
         this.onWinner(winner);
         return;
-        }
-
-        const postEvenets = caster.getPostEvents();
-        for(let i=0; i<postEvenets.length; i++){
-            const event = {
-                ...postEvenets[i],
-                submission,
-                action: submission.action,
-                caster,
-                target: submission.target
-            }
-            await this.onNewEvent(event);
-        }
-
-        const expiredEvent = caster.decrementStatus();
-        if(expiredEvent){
-            await this.onNewEvent(expiredEvent);
         }
 
         this.nextTurn();

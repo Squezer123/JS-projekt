@@ -10,15 +10,18 @@ class Overworld {
    this.currenPosition; 
    this.ctx.imageSmoothingEnabled = false;
    this.vision;
+
  }
 
-  startGameLoop() {
+  async startGameLoop() {
     const step = () => {
       //Clear off the canvas
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.ctx.setTransform(1, 0, 0, 1, 0, 0);
       this.ctx.scale(1.5, 1.5);
-      
+
+      console.log(this.hero);
+      console.log(heroInstance)
       const cameraPerson = this.map.gameObjects.hero;
       Object.values(this.map.gameObjects).forEach(object => {
         object.update({
@@ -39,13 +42,15 @@ class Overworld {
         object.sprite.draw(this.ctx, cameraPerson, object.isObject);
         nextObject = gameObjectsIterator.next();
       }
-      // this.vision.update();
-      // this.vision.changed = true;
+
       // // Draw Upper layer
       // this.map.drawUpperImage(this.ctx);
-      requestAnimationFrame(() => {
-        step();   
-      })
+      if(!this.map.isPaused || restartOverworld){
+        requestAnimationFrame(() => {
+          step();   
+        })
+      }
+      
     }
     step();
  }
@@ -68,6 +73,16 @@ class Overworld {
  bindActionInput(){
   new KeyPressListener("KeyE", () => {
     this.map.checkForActionCutscene();
+  })
+  new KeyPressListener("Escape", () => {
+    if(!this.isCutscenePlaying){
+      if(!isMenuOpened){
+        isMenuOpened = true;
+        this.map.startCutscene([
+          { type: "pause" },
+        ])
+      }
+    }
   })
  }
 

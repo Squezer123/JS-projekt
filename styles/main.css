@@ -7,6 +7,7 @@
 @import url(KeyboardMenu.css);
 @import url(CreateCharacter.css);
 @import url(Hud.css);
+@import url(PauseMenu.css);
 
 * {
   box-sizing:border-box;

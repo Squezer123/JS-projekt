@@ -5,16 +5,20 @@ class Person extends GameObject {
     this.class = config.class || "";
     this.movingProgressRemaining = 0;
     this.isStanding = false;
+    this.agility = config.agility;
+    this.intelligence = config.intelligence;
+    this.strength = config.strength;
     this.hp = config.hp || 50;
     this.team = config.team || "player";
     this.maxHp = config.maxHp || 50;
     this.xp = config.xp || 0;
+    this.onCooldown = [];
     this.level = config.level || 5;
     this.damageTakenMod = config.damageTakenMod || 1;
     this.damageGivenMod = config.damageGivenMod || 1;
     this.status = config.status || null;
     this.isPlayerControlled = config.isPlayerControlled || true;
-    this.actions = config.actions || ["normalAttack", "strongAttack", "fastAttack", "clumsyStatus", "enragedStatus"];
+    this.actions = config.actions || [];
 
     this.isPlayerControlled = false;
     this.useTile = utils.nextPosition(this.x,this.y,this.direction);
@@ -98,5 +102,6 @@ class Person extends GameObject {
     }
     this.sprite.setAnimation("idle-"+this.direction);    
   }
+
 
 }

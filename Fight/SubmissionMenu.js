@@ -91,14 +91,35 @@ class SubmissionMenu {
             spells: [
                 ...this.caster.actions.map(key =>{
                     const action = Actions[key];
-                    if(action.type === "spell")
-                    return{
-                        label: action.label,
-                        description: action.description,
-                        disabled: false,
-                        handler: () => {
-                            this.menuSubmit(action);
-                        },
+                    let isOnCd = false;
+                    let turnsRem = 0;
+                    if(action.type === "spell"){
+                        console.log("cooldown:",this.caster,this.caster.onCooldown);
+                        console.log(this.caster.onCooldown.length)
+                        if(this.caster.onCooldown.length > 0){
+                            this.caster.onCooldown.forEach(el => {
+                                if(el.label === action.label){
+                                    isOnCd = true;
+                                    turnsRem = el.turns;
+                                }
+                                
+                            })
+                        }
+                        return{
+                            label: action.label,
+                            description: action.description,
+                            disabled: isOnCd,
+                            right: () => {
+                                if(turnsRem === 0){
+                                    return "";
+                                }else{
+                                    return turnsRem;
+                                }
+                            },
+                            handler: () => {
+                                this.menuSubmit(action);
+                            },
+                        }
                     }
                 }),
                 backOption

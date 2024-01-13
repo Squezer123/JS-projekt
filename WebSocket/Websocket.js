@@ -1,7 +1,15 @@
-const socket = io.connect('ws://localhost:3000', { transports: ["websocket"] });
+class Websocket {
+    constructor(){
+        this.socket;
+    }
 
-socket.emit('clientEvent', { message: 'Test' });
+    init(){
+        this.socket = io.connect('ws://localhost:3000', { transports: ["websocket"] });
 
-socket.on('serverEvent', (data) => {
-    console.log('Server:', data);
-});
+        this.socket.emit('clientEvent', { message: 'Test' });
+        this.socket.on('serverEvent', (data) => {
+            console.log('Server:', data);
+        });
+    }
+
+}
