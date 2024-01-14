@@ -21,7 +21,7 @@ class Sprite {
       "walk-up":[ [0,5], [1,5], [2,5], [3,5], [4,5] ],
       "walk-left":[ [0,11], [1,11], [2,11], [3,11], [4,11]],
   }
-    this.currentAnimation = "idle-right"; // config.currentAnimation || "idle-down";
+    this.currentAnimation = "idle-down"; // config.currentAnimation || "idle-down";
     this.currentAnimationFrame = 0;
 
     this.animationFrameLimit = config.animationFrameLimit || 8;

@@ -4,7 +4,8 @@ const loginButton = document.querySelector(".submitLogin");
 const registerButton = document.getElementById('registerForm')
 const formContainer = document.querySelector(".loginForm");
 const gameContainer = document.querySelector(".game-container");
-const socket = new Websocket();
+window.socket = new Websocket();
+
 socket.init();
 
 cookies.clearCookies();
@@ -27,11 +28,30 @@ loginButton.addEventListener("click", async (event) => {
 
     socket.socket.emit('login', { username, password });
 
-    socket.socket.on('loginResponse', (data) => {
+    socket.socket.on('loginResponse', async (data) => {
         if (data.success) {
             cookies.addCookie("username",data.username,60);
             formContainer.style.display = "none";
             gameContainer.style.display = "none";
+            
+            socket.socket.emit('getLevels', { username: data.username });
+
+            socket.socket.on('getLevelsResponse', (data) => {
+                if (data.success) {
+                    let helpArr = ["warriorLevel","wizardLevel","rogueLevel"]
+                    helpArr.forEach(element => {
+                        cookies.addCookie(element,data.levels[element],60)
+                        console.log(cookies.getCookieData(element))
+                    });
+                } else {
+                    console.error('Błąd pobierania poziomów:', data.message);
+                }
+            });
+            let loader = document.createElement("div");
+            loader.classList.add("loader");
+            document.body.appendChild(loader)
+            await utils.wait(1500);
+            loader.remove();
             let newChar = new CreateCharacter();
             newChar.init().then(() => {
                 let selectedClass = newChar.selectedClass;

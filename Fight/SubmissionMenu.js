@@ -137,7 +137,10 @@ class SubmissionMenu {
     }
 
     decide(){
-        this.menuSubmit(Actions[this.caster.actions[0]])
+        let AI = new CombatantAI(this.caster,this.enemy);
+        let action = AI.decide();
+        console.log("id:", action, "Jaka akcja:", this.caster.actions[action]);
+        this.menuSubmit(Actions[this.caster.actions[action]])
     }
 
     showMenu(container){

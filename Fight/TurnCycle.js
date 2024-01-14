@@ -14,6 +14,7 @@ class TurnCycle {
         const enemyId = this.battle.activeCombatants[caster.team === "player" ? "enemy" : "player"]
         const enemy = this.battle.combatants[enemyId];
 
+
         const submission = await this.onNewEvent({
             type: "submissionMenu",
             caster,
@@ -72,18 +73,18 @@ class TurnCycle {
             })
             
             const xp = submission.target.givesXp;
-
-            await this.onNewEvent({
-                type: "textMessage", text: `You got ${xp}xp!`
-            })
-            if(submission.target.team === "enemy"){
+            if(winnerId === 'player'){
                 await this.onNewEvent({
-                    type: "giveXp",
-                    xp,
-                    combatant: this.battle.combatants[winnerId]
+                    type: "textMessage", text: `You got ${xp}xp!`
                 })
+                if(submission.target.team === "enemy"){
+                    await this.onNewEvent({
+                        type: "giveXp",
+                        xp,
+                        combatant: this.battle.combatants[winnerId]
+                    })
+                }
             }
-            
         }
         
         if (winner) {

@@ -47,7 +47,7 @@ class Fight {
             <img src="${'./Assets/playerv2.png'}" alt="Hero" />
         </div>
         <div class ="Fight_enemy">
-            <img src="${'/Assets/playerv2.png'}" alt="Enemy" />
+            <img src="${this.combatants['enemy'].src}" alt="Enemy" />
         </div>
         `)
     }
@@ -77,7 +77,7 @@ class Fight {
                     heroInstance.hp = playerCombatant.hp;
                     heroInstance.xp = playerCombatant.xp;
                     
-                    const tempEnemy = OverworldMaps.Lobby.gameObjects[this.mapId];
+                    const tempEnemy = this.map.gameObjects[this.mapId];
                     this.map.removeWall(tempEnemy.x, tempEnemy.y)
                     delete this.map.gameObjects[this.mapId]
                 }

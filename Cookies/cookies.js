@@ -47,5 +47,8 @@ const cookies = {
         }
     
         return "";
+    },
+    modifyCookie(cookieName, newValue) {
+        document.cookie = `${cookieName}=${newValue}; path=/`;
     }
 }

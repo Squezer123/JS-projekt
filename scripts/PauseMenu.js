@@ -8,24 +8,12 @@ class PauseMenu {
         if(pageKey === "root"){
             return[
                 {
-                    label: "Inventory",
-                    description: "Let's see what do you have in pockets",
-                    handler: () => {
-
-                    }
-                },
-                {
-                    label: "Leave dungeon",
-                    description: "Well you can do that but your achivments will be forgotten",
-                    handler: () => {
-
-                    }
-                },
-                {
                     label: "Logout",
                     description: "If you really have to...",
                     handler: () => {
                         this.close();
+                        location.reload();
+                        cookies.clearCookies();
                     }
                 },
                 {

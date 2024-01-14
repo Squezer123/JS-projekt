@@ -102,10 +102,10 @@ class OverworldMap {
 
  
 
-  AddHero(hero){
+  AddHero(hero,cords){
     this.gameObjects.hero = hero;
-    this.gameObjects.hero.x = utils.withGrid(1);
-    this.gameObjects.hero.y = utils.withGrid(1);
+    this.gameObjects.hero.x = utils.withGrid(3);
+    this.gameObjects.hero.y = utils.withGrid(3);
   }
   addWall(x,y) {
     this.walls[`${x},${y}`] = true;
@@ -127,61 +127,31 @@ window.OverworldMaps = {
     upperSrc: "Assets/map.png",
     gameObjects: {
       enemy1: new Person({
-        id: "c001",
+        id: "DeathMage",
+        src: "Assets/deathMage.png",
         onCooldown: [],
-        x: utils.withGrid(5),
-        y: utils.withGrid(6),
+        x: utils.withGrid(2),
+        y: utils.withGrid(4),
       
         talking: [
           {
             events: [
-              {type: "textMessage", text:"Hello There", faceHero: "enemy1"},
-              {type: "fight", enemyId: "c001",mapId: "enemy1"}
-            ]
-          }
-        ]
-      }),
-      enemy2: new Person({
-        id: "c001",
-        x: utils.withGrid(7),
-        y: utils.withGrid(7),
-      
-        talking: [
-          {
-            events: [
-              {type: "textMessage", text:"Hello There", faceHero: "enemy2"},
-              {type: "fight", enemyId: "c001",mapId: "enemy2"}
-            ]
-          }
-        ]
-      }),
-      chest: new GameObject({
-        id: "chest",
-        x: utils.withGrid(7),
-        y: utils.withGrid(1),
-        src: "Assets/items/mini_chest/mini_chest_3.png",
-        isObject: true,
-        inventory: [
-          new Item({})
-         ], 
-        talking: [
-          {
-            events: [
-              {type: "textMessage", text:"Inventory comming soon", faceHero: "chest"},
-              {type: "PickItem", faceHero: "chest"}
+              {type: "fight", enemyId: "DeathMage",mapId: "enemy1"}
             ]
           }
         ]
       })
     },
     walls:{
+      [utils.asGridCoords(4,2)]: true,
+      [utils.asGridCoords(5,2)]: true,
     },
     cutsceneSpaces: {
-      [utils.asGridCoords(3,6)]: [
+      [utils.asGridCoords(5,1)]: [
           {
             events: [
               {who: "hero", type: "stand", direction: "right"},
-              {type: "textMessage", text:"Once you go in there, it may be hard to come back...", faceHero: "enemy1"},
+              {type: "textMessage", text:"Once you go in there, it may be hard to come back..."},
               {type: "enterDungeon", map:"Room"},
             ]
         }
@@ -190,9 +160,9 @@ window.OverworldMaps = {
     },
     polygon:[
       [1,1],
-      [1,9],
-      [9,9],
-      [9,1]
+      [1,6],
+      [5,6],
+      [5,1]
     ]
   },
   Dungeon: {

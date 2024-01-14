@@ -20,8 +20,6 @@ class Overworld {
       this.ctx.setTransform(1, 0, 0, 1, 0, 0);
       this.ctx.scale(1.5, 1.5);
 
-      console.log(this.hero);
-      console.log(heroInstance)
       const cameraPerson = this.map.gameObjects.hero;
       Object.values(this.map.gameObjects).forEach(object => {
         object.update({
@@ -55,20 +53,6 @@ class Overworld {
     step();
  }
 
-
- showInventory(){
-  new KeyPressListener("KeyI", () => {
-    if(this.inventoryOpen === false){
-      this.map.gameObjects.hero.showInventory(this.map);
-      
-      this.inventoryOpen === true;
-    }
-    else{
-      this.inventoryOpen === false;
-    }
-    
-  })
- }
 
  bindActionInput(){
   new KeyPressListener("KeyE", () => {
@@ -108,7 +92,6 @@ class Overworld {
 
   this.startMap(window.OverworldMaps.Lobby);
 
-  this.showInventory();
   this.bindActionInput();
   this.bindHeroPositionCheck();
 

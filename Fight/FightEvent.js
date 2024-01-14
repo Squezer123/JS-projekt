@@ -21,7 +21,7 @@ class FightEvent {
 
     async stateChange(resolve){
         console.log(this.event);
-        const {caster, target, damage,damageT,damageG, status, action, selfDamage, cooldown, label} = this.event
+        const {caster, target, damage,damageT,damageG, status, action, selfDamage, cooldown, label, heal} = this.event
         const who = this.event.onCaster ? caster : target;
 
         const targetDiv = who.team === "player" ? document.querySelector(".Fight_hero") : document.querySelector(".Fight_enemy");
@@ -33,6 +33,17 @@ class FightEvent {
             await utils.wait(600);
         }
 
+        if(heal){
+            let maxHp = who.maxHp;
+            let healValue = heal;
+            if(who.hp + heal > maxHp)
+            {
+                healValue = maxHp - who.hp;
+            }
+            who.update({
+                hp: who.hp + healValue
+            })
+        }
         if(selfDamage){
             targetDiv.classList.add("battle-damage-blink");   
             who.update({
@@ -95,9 +106,35 @@ class FightEvent {
         menu.init(this.battle.element)
     }
 
-    giveXp(resolve){
+    giveXp(resolve) {
         let amount = this.event.xp;
-        const {combatant} = this.event;
+        const combatant = this.event.combatant;
+        let combatantLevel = combatant.level
+        combatantLevel = parseInt(combatantLevel, 10);
+        let levelsGained = 0;
+        
+        combatant.xp += amount;
+        console.log("przed while", combatantLevel)
+        while (combatant.xp >= 100) {
+            combatant.xp -= 100;
+            combatantLevel += 1;
+            combatant.maxHp += 5;
+            combatant.hp = combatant.maxHp;
+            levelsGained += 1;
+            totalLevels += 1;
+            let tempClass = this.event.combatant.class.toLowerCase();
+            console.log("Combatant level:", combatantLevel);
+            cookies.modifyCookie(`${tempClass}Level`, combatantLevel);
+            combatant.level = combatantLevel;
+            let popUp = new PopUp(levelsGained);
+            popUp.init();
+            
+            setTimeout(() => {
+                popUp.removeElement();
+            }, 3000);
+        }
+        
+        totalLevels = 0;
         resolve();
     }
 

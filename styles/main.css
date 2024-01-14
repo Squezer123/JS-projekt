@@ -8,6 +8,7 @@
 @import url(CreateCharacter.css);
 @import url(Hud.css);
 @import url(PauseMenu.css);
+@import url(PopUp.css);
 
 * {
   box-sizing:border-box;
@@ -192,4 +193,29 @@ body:hover {
 
 .register{
   display: none !important;
+}
+
+
+.loader {
+  position: absolute;
+  top: 250px;
+  border: 16px solid black;
+  border-radius: 50%;
+  border-top: 16px solid red;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  outline: 1px solid red;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

@@ -8,27 +8,30 @@ class CreateCharacter{
         if(type === "class"){
             this.element = document.createElement("div");
             let body = document.body;
-            this.element.classList.add("container")
+            this.element.classList.add("container");
+            console.log("createChar",cookies.getCookieData("wizardLevel"));
             this.element.innerHTML = (`
                 <div
                     class="box box-1"
                     style="--img: url(../Assets/CharImages/mage.jpg)"
-                    data-text="Wizard"
+                    data-text="Level: ${cookies.getCookieData("wizardLevel")} Wizard"
                 ></div>
                 <div
                     class="box box-2"
                     style="--img: url(../Assets/CharImages/rogue.jpg)"
-                    data-text="Rogue"
+                    data-text="Level: ${cookies.getCookieData("rogueLevel")} Rogue"
                 ></div>
                 <div
                     class="box box-3"
                     style="--img: url(../Assets/CharImages/warior.jpg)"
-                    data-text="Warior"
+                    data-text="Level: ${cookies.getCookieData("warriorLevel")} Warior"
                 ></div>
             `);        
             
             this.element.querySelectorAll('.box').forEach(box => {
-                box.addEventListener('click', () => this.chooseClass(box.dataset.text));
+                const className = box.dataset.text.split(' ')[2];
+                console.log("klasa",className);
+                box.addEventListener('click', () => this.chooseClass(className));
             });
 
             body.appendChild(this.element)

@@ -1,0 +1,35 @@
+.PopUp{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 15px;
+    font: inherit;
+    cursor: inherit;
+    bottom: 0;
+    right: 0;
+    outline: 1px solid red;
+    background-color: black;
+    color: red;
+    border-radius: 8px;
+    font-size: 10px;
+    opacity: 0;
+}
+
+.PopUp-fade-out{
+    animation: scene-transition-fade-out 1.2s forwards;
+}
+.PopUp-fade-in{
+    animation: scene-transition-fade-in 1.2s forwards;
+}
+
+
+@keyframes scene-transition-fade-in{
+    from { opacity: 0;}
+    to {opacity: 1;}
+}
+@keyframes scene-transition-fade-out{
+    from { opacity: 1;}
+    to {opacity: 0;}
+}

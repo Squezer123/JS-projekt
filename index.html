@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Forgotten</title>
+    <meta http-equiv="Content-Security-Policy">
     <link href="styles/main.css" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="styles/Fight.css" rel="stylesheet">
     <link rel="stylesheet" href="styles/Combatant.css" rel="stylesheet">
@@ -53,9 +54,10 @@
     </div>
 
     <!-- Scripts -->
+    <script src=""></script>
     <script src="Cookies/cookies.js"></script>
     <script src="Content/GlobalStates.js"></script>
-    <script src="/node_modules/socket.io-client/dist/socket.io.js"></script>
+    <script src="node_modules/socket.io-client/dist/socket.io.js"></script>
     <script src="scripts/GameObjectIterator.js"></script>
     <script src="scripts/utils.js"></script>
     <script src="scripts/DirectionInput.js"></script>
@@ -69,7 +71,6 @@
     <script src="scripts/Sprite.js"></script>
     <script src="scripts/OverworldMap.js"></script>
     <script src="scripts/OverworldEvent.js"></script>
-    <script src="scripts/Inventory.js"></script>
     <script src="scripts/TextMessage.js"></script>
     <script src="scripts/KeyPressListener.js"></script>
     <script src="scripts/RevealingText.js"></script>
@@ -79,8 +80,11 @@
     <script src="scripts/PauseMenu.js"></script>
     <script src="scripts/Player.js"></script>
     <script src="Content/Enemies.js"></script>
+    <script src="Content/Rooms.js"></script>
     <script src="Content/Class.js"></script>
     <script src="Content/Actions.js"></script>
+    <script src="Fight/PopUp.js"></script>
+    <script src="Fight/CombatantAI.js"></script>
     <script src="Fight/Fight.js"></script>
     <script src="Fight/Combatant.js"></script>
     <script src="Fight/SubmissionMenu.js"></script>

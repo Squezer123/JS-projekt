@@ -121,10 +121,10 @@ class OverworldEvent{
             walls:{},
             cutsceneSpaces: {},
             polygon:[
-              [0,0],
-              [0,5],
-              [5,5],
-              [5,0]
+              [1,1],
+              [1,6],
+              [6,6],
+              [6,1]
             ]
         }
         switch(this.event.direction){
@@ -147,6 +147,8 @@ class OverworldEvent{
         sceneTransition.init(document.querySelector(".game-container"), () => {
                 this.map.removeWall(this.map.gameObjects.hero.x, this.map.gameObjects.hero.y);
                 Room.lowerSrc = `${dungeon[x][y].Room.src}`;
+                Room.walls = dungeon[x][y].Room.roomData.walls;
+                Room.gameObjects = dungeon[x][y].Room.roomData.enemies;
                 this.map.overworld.currenPosition = {x: x, y:y};
                 this.map.overworld.startMap(Room);
                 resolve();
@@ -155,6 +157,7 @@ class OverworldEvent{
     }
 
     enterDungeon(resolve){
+        Rooms = Object.assign({}, activeRooms);
         let newDungeon = new DungeonCreator(this.ctx);
         newDungeon.init();
         this.map.overworld.dungeonMap = newDungeon.dungeonMap;
@@ -181,10 +184,10 @@ class OverworldEvent{
             walls:{},
             cutsceneSpaces: {},
             polygon:[
-              [0,0],
-              [0,5],
-              [5,5],
-              [5,0]
+              [1,1],
+              [1,6],
+              [6,6],
+              [6,1]
             ]
         }
         Room.cutsceneSpaces = this.generateDoors(newDungeon.dungeonMap[newDungeon.startingPoint.x][newDungeon.startingPoint.y].directions);
@@ -192,13 +195,14 @@ class OverworldEvent{
                     sceneTransition.init(document.querySelector(".game-container"), () => {
                         this.map.removeWall(this.map.gameObjects.hero.x, this.map.gameObjects.hero.y);
                         Room.lowerSrc = `${newDungeon.dungeonMap[newDungeon.startingPoint.x][newDungeon.startingPoint.y].Room.src}`;
+                        Room.walls = newDungeon.dungeonMap[newDungeon.startingPoint.x][newDungeon.startingPoint.y].Room.roomData.walls;
+                        Room.gameObjects = newDungeon.dungeonMap[newDungeon.startingPoint.x][newDungeon.startingPoint.y].Room.roomData.enemies;
                         this.map.overworld.startMap(Room);
                         this.map.overworld.currenPosition = {
                             x: newDungeon.startingPoint.x,
                             y: newDungeon.startingPoint.y
                         }
 
-                        console.log(this.map);
                         resolve();
                         sceneTransition.fadeOut();
                     });
@@ -208,7 +212,7 @@ class OverworldEvent{
       
         directions.forEach(direction => {
           if (direction === 'up') {
-            const doorCoords = utils.asGridCoords(2, 0);
+            const doorCoords = utils.asGridCoords(3, 1);
             newSpaces[doorCoords] = [];
             newSpaces[doorCoords].push({
               events: [
@@ -217,7 +221,7 @@ class OverworldEvent{
             });
           }
           if (direction === 'down') {
-            const doorCoords = utils.asGridCoords(2, 4);
+            const doorCoords = utils.asGridCoords(3, 5);
             newSpaces[doorCoords] = [];
             newSpaces[doorCoords].push({
               events: [
@@ -226,7 +230,7 @@ class OverworldEvent{
             });
           }
           if (direction === 'left') {
-            const doorCoords = utils.asGridCoords(0, 2);
+            const doorCoords = utils.asGridCoords(1, 3);
             newSpaces[doorCoords] = [];
             newSpaces[doorCoords].push({
               events: [
@@ -235,7 +239,7 @@ class OverworldEvent{
             });
           }
           if (direction === 'right') {
-            const doorCoords = utils.asGridCoords(4, 2);
+            const doorCoords = utils.asGridCoords(5, 3);
             newSpaces[doorCoords] = [];
             newSpaces[doorCoords].push({
               events: [
@@ -257,12 +261,23 @@ class OverworldEvent{
                 if(heroInstance.hp <= 0){
                         document.querySelector(".game-container").style.display = 'none';
                         this.map.isPaused = true;
+                        let newLevelsData = {
+                            username: cookies.getCookieData("username"),
+                            warriorLevel: cookies.getCookieData("warriorLevel"),
+                            rogueLevel: cookies.getCookieData("rogueLevel"),
+                            wizardLevel: cookies.getCookieData("wizardLevel")
+                        };
+                        socket.socket.emit('updateLevels', newLevelsData);
+                        let loader = document.createElement("div");
+                        loader.classList.add("loader");
+                        document.body.appendChild(loader)
+                        await utils.wait(1500);
+                        loader.remove();
                         let newChar = new CreateCharacter();
                         await newChar.init();
                         let selectedClass = newChar.selectedClass;
                         heroInstance = new Player('test', selectedClass, true);
                         document.querySelector(".game-container").style.display = 'block';
-                        console.log("nowy hero",heroInstance);
                     this.event.map = "Lobby";
                     this.changeMap(resolve);
                     this.map.isPaused = false;

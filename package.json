@@ -2,9 +2,9 @@
   "name": "js-projekt",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "render.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron ."
   },
   "author": "",
   "license": "ISC",
@@ -12,5 +12,9 @@
     "howler": "^2.2.4",
     "socket.io": "^4.7.3",
     "socket.io-client": "^4.7.3"
-  }
+  },
+  "files": [
+    "index.html",
+    "./Assets/Sounds/Songs/theme.mp3"
+  ]
 }
