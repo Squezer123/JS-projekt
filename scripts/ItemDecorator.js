@@ -1,24 +1,14 @@
 class ItemDecorator {
     constructor(item) {
       this.item = item;
+      this.setItem();
     }
-  
-    addUseEffect() {
-    let losowaLiczba = Math.random();
-    if(losowaLiczba < 0.2){
-        this.item.useEffect = function () {
-            console.log(`${this.name} is cursed!`);
-          };
-    }
-    else{
-        this.item.useEffect = function () {
-            console.log(`${this.name} is fine!`);
-          };
-    }
+    setItem(){
+      if(this.item.name === "healingPotion"){
+        this.item.actionId = "heal";
+        this.item.team = "player";
+      }
       
     }
 
-    getItem() {
-      return this.item;
-    }
   }

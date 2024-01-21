@@ -82,7 +82,7 @@ class DungeonCreator{
         let room = new Room({
             src: "",
         });
-        room.adjustRoom(exits, isStartingPoint, directions);
+        room.adjustRoom(exits, directions);
         return room;
     }
 

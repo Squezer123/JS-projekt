@@ -7,7 +7,7 @@ class Room{
         this.image.src = config.src || "";
     }
 
-adjustRoom(exits, isStartingPoint,directions){
+adjustRoom(exits,directions){
     let firstLetters = utils.directionFirstLetters(directions);
     let tempData = Rooms[`room${exits}${firstLetters}`]
     this.roomData = tempData;
