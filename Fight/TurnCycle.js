@@ -3,6 +3,7 @@ class TurnCycle {
         this.battle = battle;
         this.onNewEvent = onNewEvent;
         this.onWinner = onWinner;
+        this.observer = new FightObserver(battle);
         this.currentTeam = Math.random() < 0.5 ? "player" : "enemy";
     }
 
@@ -56,7 +57,8 @@ class TurnCycle {
             await this.onNewEvent(expiredEvent);
         }
 
-        const winner = this.getWinningTeam();
+        
+        const winner = this.observer.getWinningTeam();
         const winnerId = this.battle.activeCombatants[winner]
         let loserId;
 
@@ -103,18 +105,6 @@ class TurnCycle {
         this.currentTeam = this.currentTeam === "player" ? "enemy" : "player";
         this.turn();
     }
-
-    getWinningTeam() {
-        let aliveTeams = {};
-        Object.values(this.battle.combatants).forEach(c => {
-          if (c.hp > 0) {
-            aliveTeams[c.team] = true;
-          }
-        })
-        if (!aliveTeams["player"]) { return "enemy"}
-        if (!aliveTeams["enemy"]) { return "player"}
-        return null;
-      }
 
     async init(){
         // console.log("wykonuje się")
