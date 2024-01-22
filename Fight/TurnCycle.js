@@ -107,12 +107,6 @@ class TurnCycle {
     }
 
     async init(){
-        // console.log("wykonuje się")
-        // await this.onNewEvent({
-        //     type: "textMessage",
-        //     text: "Let the battle begin"
-        // })
-
         this.turn();
     }
 }

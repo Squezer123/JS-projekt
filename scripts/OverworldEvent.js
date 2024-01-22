@@ -73,15 +73,18 @@ class OverworldEvent{
 
     PickItem(resolve){
         const obj = this.map.gameObjects[this.event.faceHero];
+        console.log(this.map.gameObjects);
+        console.log(obj);
         if(this.event.faceHero){
             
-            obj.direction = utils.oppositeDirection(this.map.gameObjects["hero"].direction);
+            obj.direction = utils.oppositeDirection(heroInstance.direction);
         }
         
-        console.log(obj);
-        this.map.gameObjects.hero.addToInventory(obj.inventory,this.map);
+        let item = obj.inventory[0]
+        heroInstance.inventory.push(item)
         this.map.removeWall(obj.x,obj.y);
         delete this.map.gameObjects[this.event.faceHero];
+        console.log(heroInstance.inventory);
         resolve();
     }
 
@@ -302,8 +305,6 @@ class OverworldEvent{
         });
         menu.init(document.querySelector(".game-container"));
     }
-
-    
 
 
     init(){

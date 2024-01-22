@@ -144,13 +144,22 @@ window.Actions = {
     },
     //Items
     item_recoverStatus: {
-        label: "Potion",
+        label: "Recovery Potion",
         description: "Drinking potion is always a solution right?",
         targetType: "Friendly",
         success: [
             {type: "textMessage", text: "{CASTER} used {ACTION}"},
             {type: "stateChange", status: null, onCaster: true},
             {type: "textMessage", text: "Problem solved"},
+        ]
+    },
+    item_healingPotion: {
+        label: "Healing Potion",
+        description: "Drinking potion is always a solution right?",
+        targetType: "Friendly",
+        success: [
+            {type: "textMessage", text: "{CASTER} used {ACTION}"},
+            {type: "stateChange", heal: 30, onCaster: true},
         ]
     }
 }

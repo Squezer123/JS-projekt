@@ -123,7 +123,6 @@ class FightEvent {
             levelsGained += 1;
             totalLevels += 1;
             let tempClass = this.event.combatant.class.toLowerCase();
-            console.log("Combatant level:", combatantLevel);
             cookies.modifyCookie(`${tempClass}Level`, combatantLevel);
             combatant.level = combatantLevel;
             let popUp = new PopUp(levelsGained);

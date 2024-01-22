@@ -140,6 +140,25 @@ window.OverworldMaps = {
             ]
           }
         ]
+      }),
+      healingPotion: new GameObject({
+        id: "healingPotion",
+        x: utils.withGrid(4),
+        y: utils.withGrid(4),
+        src: "Assets/items/flasks/flasks_1_1.png",
+        isObject: true,
+        inventory: [
+          new ItemDecorator(new Item({
+            name: "healingPotion"
+          }))
+         ], 
+        talking: [
+          {
+            events: [
+              {type: "PickItem", faceHero: "healingPotion"}
+            ]
+          }
+        ]
       })
     },
     walls:{
@@ -169,29 +188,7 @@ window.OverworldMaps = {
     lowerSrc: "Assets/dungeon.png",
     upperSrc: "Assets/test.png",
     gameObjects: {
-      key: new GameObject({
-        id: "key",
-        x: utils.withGrid(7),
-        y: utils.withGrid(7),
-        src: "Assets/items/keys/keys_1_1.png",
-        isObject: true,
-        inventory: [
-          new Item({
-            id: 1,
-            name: "key",
-            amount: 1,
-            description:"Lets you leave dungeon",
-            src: "Assets/items/keys/keys_1_1.png"
-          })
-         ], 
-        talking: [
-          {
-            events: [
-              {type: "PickItem", faceHero: "key"}
-            ]
-          }
-        ]
-      })
+      
     },
     walls:{
       [utils.asGridCoords(8,3)]: true,

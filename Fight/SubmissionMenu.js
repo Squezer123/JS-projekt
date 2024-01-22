@@ -74,7 +74,9 @@ class SubmissionMenu {
             ].filter(Boolean),
             items: [
                 ...this.items.map(item =>{
+                    
                     const action = Actions[item.actionId];
+                    console.log(action);
                     return{
                         label: action.label,
                         description: action.description,

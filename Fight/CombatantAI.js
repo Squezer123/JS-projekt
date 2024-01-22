@@ -26,7 +26,6 @@ class CombatantAI{
             }
             if(Actions[element].type === "spell"){
                 for(let i = 0; i <= this.caster.onCooldown.length; i++){
-                    console.log("cooldown:", this.caster.onCooldown[i]);
                     if(this.caster.onCooldown[i] !== undefined && this.caster.onCooldown[i] !== null){
                         if(this.caster.onCooldown[i].label === Actions[element])
                         isOnCd = true;
