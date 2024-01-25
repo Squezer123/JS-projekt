@@ -9,6 +9,5 @@ class ItemDecorator {
         this.item.actionId = "item_healingPotion";
         this.item.team = "player";
       }
-      
     }
   }

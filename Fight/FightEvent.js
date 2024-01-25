@@ -122,6 +122,7 @@ class FightEvent {
             combatant.hp = combatant.maxHp;
             levelsGained += 1;
             totalLevels += 1;
+            
             let tempClass = this.event.combatant.class.toLowerCase();
             cookies.modifyCookie(`${tempClass}Level`, combatantLevel);
             combatant.level = combatantLevel;
